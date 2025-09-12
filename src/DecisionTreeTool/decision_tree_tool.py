@@ -282,17 +282,47 @@ class DecisionTreeExporter:
     
     @staticmethod
     def to_ascii(tree: DecisionTree) -> str:
-        """Export to ASCII art tree for terminal display"""
+        """Export to ASCII art tree for terminal display (cycle-aware)"""
         if not tree.root_id:
             return "Empty Tree"
         
         lines = []
+        visited_in_path = set()  # Track nodes in current path to detect cycles
+        node_first_occurrence = {}  # Track where we first drew each node
         
-        def draw_node(node_id: str, prefix: str = "", is_last: bool = True, parent_answer: str = "") -> None:
-            """Recursively draw node and its children"""
+        def draw_node(node_id: str, prefix: str = "", is_last: bool = True, 
+                     parent_answer: str = "", depth: int = 0) -> None:
+            """Recursively draw node and its children with cycle detection"""
             if node_id not in tree.nodes:
                 return
+            
+            # Check for cycles
+            if node_id in visited_in_path:
+                # This is a cycle - show a reference instead of recursing
+                connector = "└── " if is_last else "├── "
+                answer_label = f"[{parent_answer}] " if parent_answer else ""
                 
+                # Try to find where we first showed this node
+                if node_id in node_first_occurrence:
+                    target_description = node_first_occurrence[node_id]
+                    cycle_text = f"{answer_label}🔄 → loops back to: {target_description}"
+                else:
+                    node_question = tree.nodes[node_id].question[:50] + ("..." if len(tree.nodes[node_id].question) > 50 else "")
+                    cycle_text = f"{answer_label}🔄 → cycles back to: {node_question}"
+                
+                lines.append(f"{prefix}{connector}{cycle_text}")
+                return
+            
+            # Prevent infinite recursion with depth limit
+            if depth > 20:
+                connector = "└── " if is_last else "├── "
+                answer_label = f"[{parent_answer}] " if parent_answer else ""
+                lines.append(f"{prefix}{connector}{answer_label}⚠️  → (max depth reached)")
+                return
+            
+            # Mark this node as visited in current path
+            visited_in_path.add(node_id)
+            
             node = tree.nodes[node_id]
             
             # Create connector
@@ -307,6 +337,10 @@ class DecisionTreeExporter:
             else:
                 node_text = f"{answer_label}{node.question}"
             
+            # Remember this node's first occurrence for cycle references
+            if node_id not in node_first_occurrence:
+                node_first_occurrence[node_id] = node.question[:30] + ("..." if len(node.question) > 30 else "")
+            
             # Add the line
             lines.append(f"{prefix}{connector}{node_text}")
             
@@ -318,7 +352,10 @@ class DecisionTreeExporter:
             children_items = list(node.children.items())
             for i, (answer, child_id) in enumerate(children_items):
                 is_last_child = (i == len(children_items) - 1)
-                draw_node(child_id, new_prefix, is_last_child, answer)
+                draw_node(child_id, new_prefix, is_last_child, answer, depth + 1)
+            
+            # Remove from visited path when we're done with this branch
+            visited_in_path.remove(node_id)
         
         # Start from root
         lines.append(f"🌳 {tree.name}")
@@ -330,10 +367,18 @@ class DecisionTreeExporter:
         root_node = tree.nodes[tree.root_id]
         lines.append(f"Root: {root_node.question}")
         
+        # Remember root for cycle detection
+        node_first_occurrence[tree.root_id] = root_node.question[:30] + ("..." if len(root_node.question) > 30 else "")
+        
         children_items = list(root_node.children.items())
         for i, (answer, child_id) in enumerate(children_items):
             is_last_child = (i == len(children_items) - 1)
-            draw_node(child_id, "", is_last_child, answer)
+            draw_node(child_id, "", is_last_child, answer, 0)
+        
+        # Add legend if cycles were detected
+        if any("🔄" in line for line in lines):
+            lines.append("")
+            lines.append("Legend: 🔄 = cycle/loop back to earlier node")
         
         return "\n".join(lines)
 
