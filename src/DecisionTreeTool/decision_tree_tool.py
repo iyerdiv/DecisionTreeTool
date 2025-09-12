@@ -389,6 +389,15 @@ class DecisionTreeCLI:
     def __init__(self):
         self.trees: Dict[str, DecisionTree] = {}
         self.current_tree: Optional[str] = None
+        self.current_project: Optional[str] = None
+        
+        # Try to load project context
+        try:
+            from .project_context import get_project_context
+            self.project_ctx = get_project_context()
+            self.current_project = self.project_ctx.detect_current_project()
+        except ImportError:
+            self.project_ctx = None
     
     def create_tree(self, name: str, description: str = "") -> str:
         """Create a new decision tree"""
@@ -433,12 +442,18 @@ class DecisionTreeCLI:
         except json.JSONDecodeError:
             return "Invalid JSON format for answers"
     
-    def export_tree(self, format_type: str, filepath: str = None) -> str:
-        """Export current tree"""
+    def export_tree(self, format_type: str, filepath: str = None, project_name: str = None) -> str:
+        """Export current tree with project-aware storage"""
         if not self.current_tree:
             return "No active tree. Create one first."
         
         tree = self.trees[self.current_tree]
+        
+        # Use project context if available and no explicit filepath
+        if self.project_ctx and filepath is None and project_name is not None:
+            filepath = str(self.project_ctx.get_tree_path(project_name, tree.name, format_type))
+        elif self.project_ctx and filepath is None and self.current_project:
+            filepath = str(self.project_ctx.get_tree_path(self.current_project, tree.name, format_type))
         
         if format_type.lower() == "json":
             result = DecisionTreeExporter.to_json(tree, filepath)
@@ -456,19 +471,106 @@ class DecisionTreeCLI:
             return f"Unsupported format: {format_type}"
         
         if filepath:
-            return f"Exported to {filepath}"
+            project_info = f" (project: {project_name or self.current_project})" if self.project_ctx else ""
+            return f"Exported to {filepath}{project_info}"
         return result
     
     def list_trees(self) -> str:
         """List all trees"""
-        if not self.trees:
-            return "No trees available"
+        result_lines = []
         
-        result = "Available trees:\n"
-        for tree_id, tree in self.trees.items():
-            marker = " (current)" if tree_id == self.current_tree else ""
-            result += f"  {tree_id}: {tree.name}{marker}\n"
-        return result
+        if self.project_ctx and self.current_project:
+            result_lines.append(f"📁 Current Project: {self.current_project}")
+            project_trees = self.project_ctx.get_project_trees(self.current_project)
+            if project_trees:
+                result_lines.append(f"📄 Saved trees in {self.current_project}:")
+                for tree_name in project_trees:
+                    result_lines.append(f"  • {tree_name}")
+            result_lines.append("")
+        
+        if not self.trees:
+            result_lines.append("No active trees in memory.")
+        else:
+            result_lines.append("🔥 Active trees in memory:")
+            for tree_id, tree in self.trees.items():
+                marker = " (current)" if tree_id == self.current_tree else ""
+                result_lines.append(f"  {tree_id}: {tree.name}{marker}")
+        
+        return "\n".join(result_lines)
+    
+    def list_projects(self) -> str:
+        """List all available projects"""
+        if not self.project_ctx:
+            return "Project context not available"
+        
+        result_lines = ["📁 Available Projects:"]
+        for name, config in self.project_ctx.list_projects().items():
+            current_marker = " (current)" if name == self.current_project else ""
+            result_lines.append(f"  • {name}{current_marker}: {config['description']}")
+            
+            # Show tree count
+            tree_count = len(self.project_ctx.get_project_trees(name))
+            if tree_count > 0:
+                result_lines.append(f"    Trees: {tree_count}")
+        
+        return "\n".join(result_lines)
+    
+    def set_project(self, project_name: str) -> str:
+        """Set the current project context"""
+        if not self.project_ctx:
+            return "Project context not available"
+        
+        if project_name not in self.project_ctx.list_projects():
+            return f"Unknown project: {project_name}. Use 'list-projects' to see available projects."
+        
+        self.current_project = project_name
+        return f"Switched to project: {project_name}"
+    
+    def load_tree(self, tree_name: str, project_name: str = None) -> str:
+        """Load a previously saved decision tree"""
+        if not self.project_ctx:
+            return "Project context not available"
+        
+        project = project_name or self.current_project
+        if not project:
+            return "No project specified. Use --project or set-project first."
+        
+        # Try to find the tree file (JSON format)
+        tree_path = self.project_ctx.get_tree_path(project, tree_name, "json")
+        
+        if not tree_path.exists():
+            return f"Tree '{tree_name}' not found in project '{project}'"
+        
+        try:
+            import json
+            with open(tree_path, 'r') as f:
+                tree_data = json.load(f)
+            
+            # Recreate the decision tree from saved data
+            tree = DecisionTree(tree_data['name'], tree_data.get('description', ''))
+            
+            # Load nodes
+            for node_id, node_data in tree_data['nodes'].items():
+                node = DecisionNode(
+                    id=node_id,
+                    question=node_data['question'],
+                    node_type=node_data.get('node_type', 'condition'),
+                    action=node_data.get('action')
+                )
+                node.children = node_data.get('children', {})
+                tree.nodes[node_id] = node
+            
+            tree.root_id = tree_data.get('root_id')
+            
+            # Store in memory with a new ID
+            tree_id = str(uuid.uuid4())[:8]
+            self.trees[tree_id] = tree
+            self.current_tree = tree_id
+            
+            return f"Loaded tree '{tree_name}' from project '{project}' with ID: {tree_id}"
+            
+        except Exception as e:
+            return f"Error loading tree: {str(e)}"
     
     def switch_tree(self, tree_id: str) -> str:
         """Switch to a different tree"""
@@ -542,7 +644,7 @@ def create_mcp_tool_definition() -> Dict[str, Any]:
 def main():
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(description="Decision Tree Tool")
-    parser.add_argument("command", choices=["create", "add", "link", "traverse", "export", "list", "switch"])
+    parser.add_argument("command", choices=["create", "add", "link", "traverse", "export", "list", "switch", "list-projects", "set-project", "load"])
     parser.add_argument("--name", help="Tree name")
     parser.add_argument("--description", help="Tree description")
     parser.add_argument("--question", help="Node question")
@@ -555,6 +657,7 @@ def main():
     parser.add_argument("--format", choices=["json", "yaml", "mermaid", "dot", "ascii"], help="Export format")
     parser.add_argument("--file", help="Output file path")
     parser.add_argument("--tree-id", help="Tree ID to switch to")
+    parser.add_argument("--project", help="Project name for context")
     
     args = parser.parse_args()
     cli = DecisionTreeCLI()
@@ -588,10 +691,25 @@ def main():
         if not args.format:
             print("Error: --format required for export command")
             return
-        result = cli.export_tree(args.format, args.file)
+        result = cli.export_tree(args.format, args.file, args.project)
     
     elif args.command == "list":
         result = cli.list_trees()
+    
+    elif args.command == "list-projects":
+        result = cli.list_projects()
+    
+    elif args.command == "set-project":
+        if not args.project:
+            print("Error: --project required for set-project command")
+            return
+        result = cli.set_project(args.project)
+    
+    elif args.command == "load":
+        if not args.name:
+            print("Error: --name required for load command")
+            return
+        result = cli.load_tree(args.name, args.project)
     
     elif args.command == "switch":
         if not args.tree_id:
