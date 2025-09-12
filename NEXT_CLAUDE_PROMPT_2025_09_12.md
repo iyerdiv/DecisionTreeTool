@@ -1,20 +1,30 @@
 # Session Continuity - December 12, 2025
 
+## 🚀 HOW TO START NEXT SESSION:
+```bash
+cd /Volumes/workplace/DecisionTreeTool
+python3 manage_decision_tree.py --help
+cat NEXT_CLAUDE_PROMPT_2025_09_12.md
+```
+**Copy this exact prompt for each new Claude session!**
+
 ## What We Did
 - Enhanced DecisionTreeTool with visual output capabilities
 - Added ASCII tree visualization for terminal display  
 - Created simple usage instructions with `manage_decision_tree.py`
 - Updated README with witty intro and clear examples
 - Tested all export formats (ASCII, Mermaid, DOT, JSON, YAML)
+- **MAJOR FIX**: ASCII renderer now handles cycles and prevents crashes!
 
 ## Current Status
-✅ DecisionTreeTool is ready for GitHub publication
+✅ DecisionTreeTool is complete and published to GitHub
 - All tests passed
 - No sensitive data found
 - Claude MCP integration working
 - Amazon Q CLI compatibility confirmed
 - Visual outputs working (ASCII, Mermaid, DOT)
 - Simple entry point created (`manage_decision_tree.py`)
+- **NEW**: Cycle detection in ASCII renderer - no more infinite recursion!
 
 ## Directory Structure
 ```
@@ -67,8 +77,25 @@
 - `/Volumes/workplace/DecisionTreeTool/Q_INTEGRATION.md` - Q setup
 
 ## Context for Next Session
-The tool is complete and tested. Ready to push to GitHub at https://github.com/dsiyer/DecisionTreeTool. All visual outputs work. The main workspace reorganization is also complete with:
+The DecisionTreeTool is **COMPLETE and published** at https://github.com/iyerdiv/DecisionTreeTool. 
+
+**Key Features Working:**
+- Simple CLI: `python3 manage_decision_tree.py create "My Tree"`  
+- Visual outputs: ASCII (with cycle detection!), Mermaid, DOT
+- AI integration: Claude MCP + Amazon Q CLI
+- Cycle-aware rendering: Shows `🔄 → loops back to: [node]` instead of crashing
+
+**Files are updated locally** - all fixes pushed to GitHub.
+
+**Workspace Organization Complete:**
 - PerfectMileSciOpsBrainWS (Brazil workspace)
 - ctrl-alt-delegate (workspace)  
 - QEcosystem (MCP/Q tools)
-- DecisionTreeTool (ready for GitHub)
+- **DecisionTreeTool (published to GitHub!)** ✅
+
+**Remember to run these commands at start of each session:**
+```bash
+cd /Volumes/workplace/DecisionTreeTool
+python3 manage_decision_tree.py --help
+cat NEXT_CLAUDE_PROMPT_2025_09_12.md
+```
