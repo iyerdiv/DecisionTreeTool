@@ -48,8 +48,14 @@ pip install -e .[dev]
 - **Robust Decision Trees**: Navigate complex decision paths with fallback logic
 - **Confidence Scoring**: Track decision quality through the entire path
 - **Context Validation**: Ensure required data exists before proceeding
-- **MCP Integration**: Use with AI assistants via Model Context Protocol
+- **AI Assistant Integration**: Works with Claude (via MCP) and Amazon Q (via CLI)
+- **Multiple Export Formats**: JSON, YAML, Mermaid diagrams, Graphviz DOT
 - **YAML/JSON Support**: Define trees in human-readable formats
+
+### 🤖 AI Assistant Integration
+- **Claude Desktop**: Full MCP integration for natural language interaction
+- **Amazon Q**: CLI-based integration for command execution
+- **Extensible**: Easy to integrate with other AI tools
 
 ### 🛡️ Robustness Features
 - **Fallback Logic**: Never hit dead ends - always have a default path
