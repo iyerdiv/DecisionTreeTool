@@ -1,0 +1,157 @@
+{
+  "name": "DecisionTreeTool Project Completion",
+  "description": "Workflow for completing DecisionTreeTool development and transitioning back to OpsBrain",
+  "root_id": "dfc2079f",
+  "created_at": "2025-09-12T11:30:51.168677",
+  "updated_at": "2025-09-12T11:30:51.168793",
+  "nodes": {
+    "dfc2079f": {
+      "id": "dfc2079f",
+      "question": "Are witty comments complete in all Python files?",
+      "node_type": "condition",
+      "children": {
+        "no": "7b5427f0",
+        "yes": "2a83ab4e"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "7b5427f0": {
+      "id": "7b5427f0",
+      "question": "Add witty comments to remaining files",
+      "node_type": "action",
+      "children": {},
+      "action": "Review and add engaging comments to all .py files with 30-something developer humor",
+      "confidence": null,
+      "metadata": {}
+    },
+    "2a83ab4e": {
+      "id": "2a83ab4e",
+      "question": "Are all features tested and working?",
+      "node_type": "condition",
+      "children": {
+        "no": "64f3fffa",
+        "yes": "298696ae"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "64f3fffa": {
+      "id": "64f3fffa",
+      "question": "Fix failing tests and functionality",
+      "node_type": "action",
+      "children": {},
+      "action": "Debug and resolve any failing tests or broken features",
+      "confidence": null,
+      "metadata": {}
+    },
+    "298696ae": {
+      "id": "298696ae",
+      "question": "Is code committed to GitHub?",
+      "node_type": "condition",
+      "children": {
+        "no": "033fef63",
+        "yes": "99d4258f"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "033fef63": {
+      "id": "033fef63",
+      "question": "Commit enhanced code to repository",
+      "node_type": "action",
+      "children": {},
+      "action": "git add . && git commit -m 'feat: Enhanced DecisionTreeTool with witty comments' && git push",
+      "confidence": null,
+      "metadata": {}
+    },
+    "99d4258f": {
+      "id": "99d4258f",
+      "question": "Is documentation complete and engaging?",
+      "node_type": "condition",
+      "children": {
+        "no": "1f39d1c4",
+        "yes": "a4c28fd0"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "1f39d1c4": {
+      "id": "1f39d1c4",
+      "question": "Update README and FUNCTIONALITY.md",
+      "node_type": "action",
+      "children": {},
+      "action": "Ensure README and FUNCTIONALITY.md reflect all new features with engaging tone",
+      "confidence": null,
+      "metadata": {}
+    },
+    "a4c28fd0": {
+      "id": "a4c28fd0",
+      "question": "Should we create a decision tree for this project?",
+      "node_type": "condition",
+      "children": {
+        "yes": "72d97b07",
+        "no": "a1a2a058"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "72d97b07": {
+      "id": "72d97b07",
+      "question": "Create and save DecisionTreeTool project completion tree",
+      "node_type": "action",
+      "children": {
+        "completed": "a1a2a058"
+      },
+      "action": "Document the project completion workflow as a decision tree for future reference",
+      "confidence": null,
+      "metadata": {}
+    },
+    "a1a2a058": {
+      "id": "a1a2a058",
+      "question": "Ready to transition back to OpsBrain work?",
+      "node_type": "condition",
+      "children": {
+        "yes": "7d16cf20",
+        "no": "57a12a14"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "7d16cf20": {
+      "id": "7d16cf20",
+      "question": "Update session context for OpsBrain transition",
+      "node_type": "action",
+      "children": {
+        "completed": "b5f246d5"
+      },
+      "action": "Update NEXT_CLAUDE_PROMPT with OpsBrain context and current status",
+      "confidence": null,
+      "metadata": {}
+    },
+    "57a12a14": {
+      "id": "57a12a14",
+      "question": "Continue DecisionTreeTool development",
+      "node_type": "action",
+      "children": {},
+      "action": "Focus on additional DecisionTreeTool features or improvements",
+      "confidence": null,
+      "metadata": {}
+    },
+    "b5f246d5": {
+      "id": "b5f246d5",
+      "question": "Switch context to OpsBrain RCA work",
+      "node_type": "action",
+      "children": {},
+      "action": "cd /Volumes/workplace && focus on OpsBrain incident analysis and bottleneck detection",
+      "confidence": null,
+      "metadata": {}
+    }
+  }
+}
