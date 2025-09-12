@@ -1,0 +1,17 @@
+{
+    "name": "DecisionTreeTool",
+    "version": "1.0.0",
+    "description": "Decision tree management and tracking tool",
+    "type": "package",
+    "dependencies": [],
+    "runtime-dependencies": [],
+    "build-dependencies": [],
+    "test-dependencies": [
+        "pytest"
+    ],
+    "languages": {
+        "Python": {
+            "version": "3.11"
+        }
+    }
+}

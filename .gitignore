@@ -1,0 +1,44 @@
+# Brazil
+.brazil/
+build/
+*.egg-info/
+dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs
+*.log
+logs/
+
+# Local
+local/
+*.local
+
+# Project specific
+decision_trees/
+output/
+temp/
+*.tree.bak
+*.yaml.bak
+*.json.bak
