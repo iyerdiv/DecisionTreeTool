@@ -4,9 +4,14 @@
 ```bash
 cd /Volumes/workplace/DecisionTreeTool
 python3 manage_decision_tree.py --help
+cat NEXT_CLAUDE_PROMPT_YYYY_MM_DD.md
+```
+**Replace YYYY_MM_DD with actual date (e.g. 2025_09_13.md) and copy this exact prompt for each new Claude session!**
+
+**For today's session, use:**
+```bash
 cat NEXT_CLAUDE_PROMPT_2025_09_12.md
 ```
-**Copy this exact prompt for each new Claude session!**
 
 ## What We Did
 - Enhanced DecisionTreeTool with visual output capabilities
@@ -97,5 +102,15 @@ The DecisionTreeTool is **COMPLETE and published** at https://github.com/iyerdiv
 ```bash
 cd /Volumes/workplace/DecisionTreeTool
 python3 manage_decision_tree.py --help
+cat NEXT_CLAUDE_PROMPT_YYYY_MM_DD.md  # Use actual date!
+```
+
+**For continuing this session:**
+```bash
 cat NEXT_CLAUDE_PROMPT_2025_09_12.md
 ```
+
+**Instructions for next session:**
+1. Copy this file to new date: `cp NEXT_CLAUDE_PROMPT_2025_09_12.md NEXT_CLAUDE_PROMPT_2025_09_13.md` (use actual next date)
+2. Update the new file with any session-specific changes
+3. Use the new dated file in your prompt
