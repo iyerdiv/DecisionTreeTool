@@ -1,0 +1,135 @@
+{
+  "name": "System Troubleshooting Guide",
+  "description": "Systematic approach to diagnosing system issues",
+  "root_id": "check_system",
+  "created_at": "2025-09-12T10:46:44.932719",
+  "updated_at": "2025-09-12T10:46:44.932719",
+  "nodes": {
+    "check_system": {
+      "id": "check_system",
+      "question": "Is the system responding?",
+      "node_type": "condition",
+      "children": {
+        "yes": "check_performance",
+        "no": "check_network"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "check_performance": {
+      "id": "check_performance",
+      "question": "Is performance degraded?",
+      "node_type": "condition",
+      "children": {
+        "yes": "check_memory",
+        "no": "monitor"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "check_memory": {
+      "id": "check_memory",
+      "question": "Is memory usage > 80%?",
+      "node_type": "condition",
+      "children": {
+        "yes": "restart_service",
+        "no": "check_cpu"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "restart_service": {
+      "id": "restart_service",
+      "question": "Restart service",
+      "node_type": "action",
+      "children": {},
+      "action": "sudo systemctl restart app-service",
+      "confidence": null,
+      "metadata": {}
+    },
+    "check_cpu": {
+      "id": "check_cpu",
+      "question": "Is CPU usage > 90%?",
+      "node_type": "condition",
+      "children": {
+        "yes": "optimize_queries",
+        "no": "monitor"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "optimize_queries": {
+      "id": "optimize_queries",
+      "question": "Optimize database queries",
+      "node_type": "action",
+      "children": {},
+      "action": "Run query optimization script",
+      "confidence": null,
+      "metadata": {}
+    },
+    "monitor": {
+      "id": "monitor",
+      "question": "Monitor system",
+      "node_type": "action",
+      "children": {},
+      "action": "Enable detailed monitoring for 1 hour",
+      "confidence": null,
+      "metadata": {}
+    },
+    "check_network": {
+      "id": "check_network",
+      "question": "Can you ping the server?",
+      "node_type": "condition",
+      "children": {
+        "yes": "check_service",
+        "no": "network_team"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "check_service": {
+      "id": "check_service",
+      "question": "Is the service running?",
+      "node_type": "condition",
+      "children": {
+        "no": "start_service",
+        "yes": "check_logs"
+      },
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "start_service": {
+      "id": "start_service",
+      "question": "Start the service",
+      "node_type": "action",
+      "children": {},
+      "action": "sudo systemctl start app-service",
+      "confidence": null,
+      "metadata": {}
+    },
+    "check_logs": {
+      "id": "check_logs",
+      "question": "Check error logs",
+      "node_type": "action",
+      "children": {},
+      "action": "tail -n 100 /var/log/app/error.log",
+      "confidence": null,
+      "metadata": {}
+    },
+    "network_team": {
+      "id": "network_team",
+      "question": "Escalate to network team",
+      "node_type": "action",
+      "children": {},
+      "action": "Create ticket for network team with diagnostics",
+      "confidence": null,
+      "metadata": {}
+    }
+  }
+}

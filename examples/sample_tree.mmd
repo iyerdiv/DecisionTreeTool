@@ -1,0 +1,39 @@
+graph TD
+    check_system["Is the system responding?"]
+    check_system -->|yes| check_performance
+    check_system -->|no| check_network
+    check_performance["Is performance degraded?"]
+    check_performance -->|yes| check_memory
+    check_performance -->|no| monitor
+    check_memory["Is memory usage > 80%?"]
+    check_memory -->|yes| restart_service
+    check_memory -->|no| check_cpu
+    restart_service["Restart service"]
+    restart_service --> restart_service_action["sudo systemctl restart app-service"]
+    restart_service_action:::actionClass
+    check_cpu["Is CPU usage > 90%?"]
+    check_cpu -->|yes| optimize_queries
+    check_cpu -->|no| monitor
+    optimize_queries["Optimize database queries"]
+    optimize_queries --> optimize_queries_action["Run query optimization script"]
+    optimize_queries_action:::actionClass
+    monitor["Monitor system"]
+    monitor --> monitor_action["Enable detailed monitoring for 1 hour"]
+    monitor_action:::actionClass
+    check_network["Can you ping the server?"]
+    check_network -->|yes| check_service
+    check_network -->|no| network_team
+    check_service["Is the service running?"]
+    check_service -->|no| start_service
+    check_service -->|yes| check_logs
+    start_service["Start the service"]
+    start_service --> start_service_action["sudo systemctl start app-service"]
+    start_service_action:::actionClass
+    check_logs["Check error logs"]
+    check_logs --> check_logs_action["tail -n 100 /var/log/app/error.log"]
+    check_logs_action:::actionClass
+    network_team["Escalate to network team"]
+    network_team --> network_team_action["Create ticket for network team with diagnostics"]
+    network_team_action:::actionClass
+    classDef actionClass fill:#90EE90,stroke:#006400,stroke-width:2px
+    classDef conditionClass fill:#87CEEB,stroke:#000080,stroke-width:2px

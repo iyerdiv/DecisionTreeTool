@@ -55,8 +55,9 @@ Q> Run: decision-tree list
 - **File-based persistence**: Trees can be saved/loaded via JSON export/import
 - **Shell-friendly**: Can be integrated into shell scripts and automation
 
-## Example Q Conversation
+## Example Q Conversations
 
+### Basic Troubleshooting Tree
 ```
 User: Help me create a decision tree for troubleshooting network issues
 
@@ -75,6 +76,26 @@ Let me link these nodes based on the diagnostic flow:
 [Runs: decision-tree link --parent root --child node2 --answer "yes"]
 [Runs: decision-tree link --parent root --child node3 --answer "no"]
 ```
+
+### Good Prompts for Q
+```
+"Create a decision tree for server troubleshooting with these steps: check if running, check CPU, restart if needed"
+
+"Add a troubleshooting step that checks disk space and warns if above 90%"  
+
+"Show me the tree in ASCII format so I can see the flow"
+
+"Export this as JSON so I can save it to our runbook"
+
+"Walk through the tree assuming the server is down and won't start"
+```
+
+### What Q Can Do
+- Execute CLI commands to build trees step by step
+- Run diagnostic commands as part of actions
+- Export trees to files for documentation  
+- Integrate with shell scripts and automation
+- Test decision paths with different scenarios
 
 ## Tips for Q Users
 

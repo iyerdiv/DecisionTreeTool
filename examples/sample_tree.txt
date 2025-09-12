@@ -1,0 +1,16 @@
+🌳 System Troubleshooting Guide
+   Systematic approach to diagnosing system issues
+
+Root: Is the system responding?
+├── [yes] Is performance degraded?
+│   ├── [yes] Is memory usage > 80%?
+│   │   ├── [yes] Restart service → sudo systemctl restart app-service
+│   │   └── [no] Is CPU usage > 90%?
+│   │       ├── [yes] Optimize database queries → Run query optimization script
+│   │       └── [no] Monitor system → Enable detailed monitoring for 1 hour
+│   └── [no] Monitor system → Enable detailed monitoring for 1 hour
+└── [no] Can you ping the server?
+    ├── [yes] Is the service running?
+    │   ├── [no] Start the service → sudo systemctl start app-service
+    │   └── [yes] Check error logs → tail -n 100 /var/log/app/error.log
+    └── [no] Escalate to network team → Create ticket for network team with diagnostics

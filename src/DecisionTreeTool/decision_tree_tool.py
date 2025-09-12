@@ -279,6 +279,63 @@ class DecisionTreeExporter:
         if filepath:
             Path(filepath).write_text(result)
         return result
+    
+    @staticmethod
+    def to_ascii(tree: DecisionTree) -> str:
+        """Export to ASCII art tree for terminal display"""
+        if not tree.root_id:
+            return "Empty Tree"
+        
+        lines = []
+        
+        def draw_node(node_id: str, prefix: str = "", is_last: bool = True, parent_answer: str = "") -> None:
+            """Recursively draw node and its children"""
+            if node_id not in tree.nodes:
+                return
+                
+            node = tree.nodes[node_id]
+            
+            # Create connector
+            connector = "└── " if is_last else "├── "
+            
+            # Add answer label if this is not root
+            answer_label = f"[{parent_answer}] " if parent_answer else ""
+            
+            # Format node text
+            if node.node_type == "action":
+                node_text = f"{answer_label}{node.question} → {node.action or 'No action'}"
+            else:
+                node_text = f"{answer_label}{node.question}"
+            
+            # Add the line
+            lines.append(f"{prefix}{connector}{node_text}")
+            
+            # Prepare prefix for children
+            extension = "    " if is_last else "│   "
+            new_prefix = prefix + extension
+            
+            # Draw children
+            children_items = list(node.children.items())
+            for i, (answer, child_id) in enumerate(children_items):
+                is_last_child = (i == len(children_items) - 1)
+                draw_node(child_id, new_prefix, is_last_child, answer)
+        
+        # Start from root
+        lines.append(f"🌳 {tree.name}")
+        if tree.description:
+            lines.append(f"   {tree.description}")
+        lines.append("")
+        
+        # Draw the tree starting from root
+        root_node = tree.nodes[tree.root_id]
+        lines.append(f"Root: {root_node.question}")
+        
+        children_items = list(root_node.children.items())
+        for i, (answer, child_id) in enumerate(children_items):
+            is_last_child = (i == len(children_items) - 1)
+            draw_node(child_id, "", is_last_child, answer)
+        
+        return "\n".join(lines)
 
 
 class DecisionTreeCLI:
@@ -346,6 +403,10 @@ class DecisionTreeCLI:
             result = DecisionTreeExporter.to_mermaid(tree, filepath)
         elif format_type.lower() == "dot":
             result = DecisionTreeExporter.to_dot(tree, filepath)
+        elif format_type.lower() == "ascii":
+            result = DecisionTreeExporter.to_ascii(tree)
+            if filepath:
+                Path(filepath).write_text(result)
         else:
             return f"Unsupported format: {format_type}"
         
@@ -420,7 +481,7 @@ def create_mcp_tool_definition() -> Dict[str, Any]:
                 },
                 "format": {
                     "type": "string",
-                    "enum": ["json", "yaml", "mermaid", "dot"],
+                    "enum": ["json", "yaml", "mermaid", "dot", "ascii"],
                     "description": "Export format"
                 },
                 "filepath": {
@@ -446,7 +507,7 @@ def main():
     parser.add_argument("--child", help="Child node ID")
     parser.add_argument("--answer", help="Answer for linking")
     parser.add_argument("--answers", help="JSON answers for traversal")
-    parser.add_argument("--format", choices=["json", "yaml", "mermaid", "dot"], help="Export format")
+    parser.add_argument("--format", choices=["json", "yaml", "mermaid", "dot", "ascii"], help="Export format")
     parser.add_argument("--file", help="Output file path")
     parser.add_argument("--tree-id", help="Tree ID to switch to")
     

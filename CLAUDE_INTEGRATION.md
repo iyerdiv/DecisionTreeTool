@@ -32,10 +32,35 @@ This tool is designed to work with Claude through MCP (Model Context Protocol).
 Once configured, you can ask Claude to:
 
 - "Create a decision tree for debugging network issues"
-- "Add a node asking if the server is responding"
+- "Add a node asking if the server is responding"  
 - "Link the nodes based on yes/no answers"
 - "Traverse the tree with these conditions..."
 - "Export the tree as a Mermaid diagram"
+
+### Example Claude Prompts
+
+**Good prompts for Claude:**
+```
+"Create a decision tree to troubleshoot website slowness. Start with checking if the site loads, then branch into database vs server issues."
+
+"Add these troubleshooting steps to the tree:
+- Check server CPU usage  
+- If high, restart the service
+- If normal, check database connections"
+
+"Show me the tree as an ASCII diagram so I can see the flow."
+
+"Export this tree as a Mermaid diagram for our documentation."
+
+"Walk me through this decision tree with these conditions: server is responding but slow, CPU is normal, database connections are timing out."
+```
+
+**What Claude can do:**
+- Build complete decision trees from your description
+- Add logical branching based on conditions  
+- Create visual representations instantly
+- Help you think through all possible paths
+- Walk through scenarios to test your logic
 
 ## Available Actions
 
