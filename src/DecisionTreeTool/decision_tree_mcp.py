@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Dict, Any, List, Optional
 
 # Import the decision tree functionality
-from decision_tree_tool import DecisionTree, DecisionTreeExporter, DecisionTreeCLI, create_mcp_tool_definition
+from .decision_tree_tool import DecisionTree, DecisionTreeExporter, DecisionTreeCLI, create_mcp_tool_definition
 
 class DecisionTreeMCPHandler:
     """MCP handler for decision tree operations"""
