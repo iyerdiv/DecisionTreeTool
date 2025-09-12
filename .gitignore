@@ -35,10 +35,17 @@ logs/
 local/
 *.local
 
-# Project specific
-decision_trees/
+# Project specific - exclude user decision trees but include project trees
+decision_trees/PerfectMileSciOpsBrain/
+decision_trees/ctrl-alt-delegate/
+decision_trees/QEcosystem/
+decision_trees/general/
+temp_files/
 output/
 temp/
 *.tree.bak
 *.yaml.bak
 *.json.bak
+
+# Include DecisionTreeTool project trees for examples
+!decision_trees/DecisionTreeTool/

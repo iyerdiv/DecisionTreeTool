@@ -1,0 +1,81 @@
+{
+  "name": "User Support Guide",
+  "description": "Help users troubleshoot DecisionTreeTool issues",
+  "root_id": "26219a72",
+  "created_at": "2025-09-12T11:11:24.670179",
+  "updated_at": "2025-09-12T11:11:24.670236",
+  "nodes": {
+    "26219a72": {
+      "id": "26219a72",
+      "question": "What type of issue is the user experiencing?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "e02ec3e5": {
+      "id": "e02ec3e5",
+      "question": "Installation problems?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "a93f4155": {
+      "id": "a93f4155",
+      "question": "Tree rendering issues?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "b8b89b2b": {
+      "id": "b8b89b2b",
+      "question": "Project organization problems?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "5deedf04": {
+      "id": "5deedf04",
+      "question": "Check Python version and dependencies",
+      "node_type": "action",
+      "children": {},
+      "action": "Verify Python 3.7+, check requirements.txt",
+      "confidence": null,
+      "metadata": {}
+    },
+    "2a37e1e3": {
+      "id": "2a37e1e3",
+      "question": "Test ASCII renderer with simple tree",
+      "node_type": "action",
+      "children": {},
+      "action": "Create basic tree, test for cycles or depth issues",
+      "confidence": null,
+      "metadata": {}
+    },
+    "a7c7e4a9": {
+      "id": "a7c7e4a9",
+      "question": "Verify project detection and directory structure",
+      "node_type": "action",
+      "children": {},
+      "action": "Check decision_trees/ folder, test project commands",
+      "confidence": null,
+      "metadata": {}
+    },
+    "f93c6ffb": {
+      "id": "f93c6ffb",
+      "question": "Point to documentation and examples",
+      "node_type": "action",
+      "children": {},
+      "action": "Reference README, example scripts, GitHub issues",
+      "confidence": null,
+      "metadata": {}
+    }
+  }
+}

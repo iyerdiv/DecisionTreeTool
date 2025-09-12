@@ -1,0 +1,4 @@
+🌳 User Support Guide
+   Help users troubleshoot DecisionTreeTool issues
+
+Root: What type of issue is the user experiencing?

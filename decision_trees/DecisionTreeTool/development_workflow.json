@@ -1,0 +1,72 @@
+{
+  "name": "Development Workflow",
+  "description": "Guide for developing and enhancing DecisionTreeTool",
+  "root_id": "7ef0c839",
+  "created_at": "2025-09-12T11:11:24.669544",
+  "updated_at": "2025-09-12T11:11:24.669611",
+  "nodes": {
+    "7ef0c839": {
+      "id": "7ef0c839",
+      "question": "Is this a new feature request?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "51b96e6b": {
+      "id": "51b96e6b",
+      "question": "Is this a bug fix?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "ef3e25c0": {
+      "id": "ef3e25c0",
+      "question": "Plan feature implementation",
+      "node_type": "action",
+      "children": {},
+      "action": "Write requirements, design API, create examples",
+      "confidence": null,
+      "metadata": {}
+    },
+    "3c360d6f": {
+      "id": "3c360d6f",
+      "question": "Reproduce and diagnose bug",
+      "node_type": "action",
+      "children": {},
+      "action": "Create test case, identify root cause, plan fix",
+      "confidence": null,
+      "metadata": {}
+    },
+    "aa7fd614": {
+      "id": "aa7fd614",
+      "question": "Update documentation",
+      "node_type": "action",
+      "children": {},
+      "action": "Update README, add examples, document API changes",
+      "confidence": null,
+      "metadata": {}
+    },
+    "411665fc": {
+      "id": "411665fc",
+      "question": "Run tests and validate",
+      "node_type": "action",
+      "children": {},
+      "action": "Test all formats, validate examples, check edge cases",
+      "confidence": null,
+      "metadata": {}
+    },
+    "0751bb15": {
+      "id": "0751bb15",
+      "question": "Commit and push changes",
+      "node_type": "action",
+      "children": {},
+      "action": "git add, commit with clear message, push to GitHub",
+      "confidence": null,
+      "metadata": {}
+    }
+  }
+}

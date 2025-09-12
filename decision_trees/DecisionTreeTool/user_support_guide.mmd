@@ -1,0 +1,19 @@
+graph TD
+    26219a72["What type of issue is the user experiencing?"]
+    e02ec3e5["Installation problems?"]
+    a93f4155["Tree rendering issues?"]
+    b8b89b2b["Project organization problems?"]
+    5deedf04["Check Python version and dependencies"]
+    5deedf04 --> 5deedf04_action["Verify Python 3.7+, check requirements.txt"]
+    5deedf04_action:::actionClass
+    2a37e1e3["Test ASCII renderer with simple tree"]
+    2a37e1e3 --> 2a37e1e3_action["Create basic tree, test for cycles or depth issues"]
+    2a37e1e3_action:::actionClass
+    a7c7e4a9["Verify project detection and directory structure"]
+    a7c7e4a9 --> a7c7e4a9_action["Check decision_trees/ folder, test project commands"]
+    a7c7e4a9_action:::actionClass
+    f93c6ffb["Point to documentation and examples"]
+    f93c6ffb --> f93c6ffb_action["Reference README, example scripts, GitHub issues"]
+    f93c6ffb_action:::actionClass
+    classDef actionClass fill:#90EE90,stroke:#006400,stroke-width:2px
+    classDef conditionClass fill:#87CEEB,stroke:#000080,stroke-width:2px

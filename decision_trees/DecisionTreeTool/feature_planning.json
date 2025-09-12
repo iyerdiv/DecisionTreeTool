@@ -1,0 +1,72 @@
+{
+  "name": "Feature Planning",
+  "description": "Decide on new features and priorities for DecisionTreeTool",
+  "root_id": "d8ef8f67",
+  "created_at": "2025-09-12T11:11:24.670585",
+  "updated_at": "2025-09-12T11:11:24.670623",
+  "nodes": {
+    "d8ef8f67": {
+      "id": "d8ef8f67",
+      "question": "Is this feature request from a user?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "eecf0658": {
+      "id": "eecf0658",
+      "question": "Does it align with core mission?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "ab291a35": {
+      "id": "ab291a35",
+      "question": "How complex is the implementation?",
+      "node_type": "condition",
+      "children": {},
+      "action": null,
+      "confidence": null,
+      "metadata": {}
+    },
+    "11d41f9e": {
+      "id": "11d41f9e",
+      "question": "Add to backlog with high priority",
+      "node_type": "action",
+      "children": {},
+      "action": "User-requested features get priority",
+      "confidence": null,
+      "metadata": {}
+    },
+    "1881ac0e": {
+      "id": "1881ac0e",
+      "question": "Evaluate fit with decision tree workflow",
+      "node_type": "action",
+      "children": {},
+      "action": "Ensure it enhances tree creation/management",
+      "confidence": null,
+      "metadata": {}
+    },
+    "663909f6": {
+      "id": "663909f6",
+      "question": "Assess development effort required",
+      "node_type": "action",
+      "children": {},
+      "action": "Estimate hours, identify dependencies, plan timeline",
+      "confidence": null,
+      "metadata": {}
+    },
+    "6bc6b9e9": {
+      "id": "6bc6b9e9",
+      "question": "Create GitHub issue with requirements",
+      "node_type": "action",
+      "children": {},
+      "action": "Document specs, examples, acceptance criteria",
+      "confidence": null,
+      "metadata": {}
+    }
+  }
+}

@@ -1,0 +1,4 @@
+🌳 OpsBrain Alert Response
+   Systematic response to OpsBrain alerts
+
+Root: Is this a critical severity alert?
