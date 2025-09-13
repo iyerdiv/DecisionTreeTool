@@ -36,9 +36,10 @@ local/
 *.local
 
 # Project specific - exclude user decision trees but include project trees
-decision_trees/PerfectMileSciOpsBrain/
-decision_trees/ctrl-alt-delegate/
-decision_trees/QEcosystem/
+# Project-specific decision tree directories (examples)
+decision_trees/project1/
+decision_trees/project2/
+decision_trees/integration/
 decision_trees/general/
 temp_files/
 output/

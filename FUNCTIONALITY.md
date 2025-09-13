@@ -1,6 +1,6 @@
 # DecisionTreeTool Functionality Guide
 
-*The Swiss Army Knife of Decision Making* 🌳  
+*The Swiss Army Knife of Decision Making* 🌳
 *Like a family tree, but for your problems*
 
 **Warning: May cause sudden clarity and knowing what to do next**
@@ -21,10 +21,10 @@ DecisionTreeTool is basically a GPS for your brain 🧠 - it helps you navigate 
 ### 📁 Project Organization (Marie Kondo for Decision Trees)
 - **Auto-Detection**: Psychic powers activated - automatically knows which project you're working on
 - **Project-Specific Storage**: Organizes trees by project because chaos is not a filing system
-- **Pre-configured Projects** (The usual suspects): 
-  - `PerfectMileSciOpsBrain` - For when operations get too perfect and your brain hurts
-  - `ctrl-alt-delegate` - Automation that actually works (shocking, we know)
-  - `QEcosystem` - Where Q and MCP tools come to play nice together
+- **Pre-configured Projects** (The usual suspects):
+  - `project1` - Main project decision trees for core operations
+  - `project2` - Secondary project for automation workflows
+  - `integration` - Where different tools and systems come to play nice together
   - `DecisionTreeTool` - Meta-trees for the framework itself (turtles all the way down)
   - `general` - The junk drawer of decision trees
 
@@ -43,7 +43,7 @@ DecisionTreeTool is basically a GPS for your brain 🧠 - it helps you navigate 
 - Interactive decision tree creation (like having a conversation with your computer)
 - Visual output in Claude interface (pretty pictures for pretty decisions)
 
-#### Amazon Q (CLI)  
+#### Amazon Q (CLI)
 - Command-line interface for shell warriors
 - Scriptable decision tree operations (automation that doesn't break)
 - File-based persistence (saves your work like a responsible adult)
@@ -67,7 +67,7 @@ python3 manage_decision_tree.py link --parent node1 --child node2 --answer "yes"
 # Export in different formats (sharing is caring)
 python3 manage_decision_tree.py export --format ascii        # Terminal art
 python3 manage_decision_tree.py export --format json --file my_tree.json  # Data format
-python3 manage_decision_tree.py export --format mermaid --project PerfectMileSciOpsBrain  # Pretty diagrams
+python3 manage_decision_tree.py export --format mermaid --project project1  # Pretty diagrams
 ```
 
 ### Project Management (Organization That Actually Works)
@@ -77,13 +77,13 @@ python3 manage_decision_tree.py export --format mermaid --project PerfectMileSci
 python3 manage_decision_tree.py list-projects
 
 # Switch to a specific project (change your focus)
-python3 manage_decision_tree.py set-project PerfectMileSciOpsBrain
+python3 manage_decision_tree.py set-project project1
 
 # List trees in current project (inventory check)
 python3 manage_decision_tree.py list
 
 # Load a previously saved tree (resurrection magic)
-python3 manage_decision_tree.py load --name "troubleshooting_guide" --project QEcosystem
+python3 manage_decision_tree.py load --name "troubleshooting_guide" --project project2
 ```
 
 ### Advanced Usage (For the Power Users)
@@ -108,9 +108,9 @@ DecisionTreeTool/
 │   └── decision_tree_mcp.py         # MCP server integration
 ├── decision_trees/                  # Project-organized storage
 │   ├── DecisionTreeTool/           # Framework development trees
-│   ├── PerfectMileSciOpsBrain/     # OpsBrain project trees
-│   ├── ctrl-alt-delegate/          # Automation project trees
-│   ├── QEcosystem/                 # Q/MCP integration trees
+│   ├── project1/                   # Main project trees
+│   ├── project2/                   # Secondary project trees
+│   ├── integration/                # Integration workflow trees
 │   └── general/                    # General purpose trees
 └── examples/                       # Demo scripts and samples
 ```
@@ -148,11 +148,11 @@ print(f"Current project: {cli.current_project}")  # Auto-detected
 
 # Create and save to project
 cli.create_tree("My Tree", "Description")
-result = cli.export_tree("json", project_name="PerfectMileSciOpsBrain")
+result = cli.export_tree("json", project_name="project1")
 print(result)  # Shows project-specific path
 
 # Load from project
-cli.load_tree("my_tree", "PerfectMileSciOpsBrain")
+cli.load_tree("my_tree", "project1")
 ```
 
 ## Visual Output Examples
@@ -181,7 +181,7 @@ graph TD
     B -->|yes| D["Check memory usage"]
     B -->|no| E["Monitor system"]
     C -->|failed| A
-    
+
     style D fill:#90EE90
     style E fill:#90EE90
 ```
@@ -299,7 +299,7 @@ Q> Run: python3 manage_decision_tree.py export --format ascii
 
 The DecisionTreeTool includes its own decision trees for development:
 - `development_workflow` - Guide for adding features
-- `user_support_guide` - Help troubleshoot user issues  
+- `user_support_guide` - Help troubleshoot user issues
 - `feature_planning` - Prioritize new enhancements
 
 Load these for guidance:

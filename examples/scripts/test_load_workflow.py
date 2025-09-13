@@ -16,7 +16,7 @@ cli = DecisionTreeCLI()
 
 # Step 1: Load the saved tree
 print("1️⃣ Loading saved tree...")
-result = cli.load_tree("opsbrain_alert_response", "PerfectMileSciOpsBrain")
+result = cli.load_tree("alert_response_system", "project1")
 print(f"Result: {result}")
 print()
 
@@ -37,6 +37,6 @@ print("✅ Workflow complete!")
 print()
 print("🎯 Key Points:")
 print("• load command loads tree from project directory")
-print("• Makes it the current active tree in memory")  
+print("• Makes it the current active tree in memory")
 print("• Can then export, modify, or traverse the loaded tree")
 print("• Persistence works: save → load → use")

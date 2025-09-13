@@ -1,47 +1,27 @@
 {
-  "PerfectMileSciOpsBrain": {
-    "description": "OpsBrain RCA and analytics system",
-    "directory": "PerfectMileSciOpsBrain",
-    "tree_types": [
-      "troubleshooting",
-      "rca",
-      "operational"
-    ]
+  "project1": {
+    "description": "Main project decision trees",
+    "directory": "project1",
+    "tree_types": ["troubleshooting", "analysis", "operational"]
   },
-  "ctrl-alt-delegate": {
-    "description": "Automation and behavioral learning system",
-    "directory": "ctrl-alt-delegate",
-    "tree_types": [
-      "automation",
-      "behavioral",
-      "decision"
-    ]
+  "project2": {
+    "description": "Secondary project decision trees",
+    "directory": "project2",
+    "tree_types": ["automation", "workflow", "decision"]
   },
-  "QEcosystem": {
-    "description": "Q and MCP tools integration",
-    "directory": "QEcosystem",
-    "tree_types": [
-      "integration",
-      "workflow",
-      "troubleshooting"
-    ]
+  "integration": {
+    "description": "Integration and workflow trees",
+    "directory": "integration",
+    "tree_types": ["integration", "workflow", "troubleshooting"]
   },
   "DecisionTreeTool": {
     "description": "Decision tree framework itself",
     "directory": "DecisionTreeTool",
-    "tree_types": [
-      "development",
-      "testing",
-      "examples"
-    ]
+    "tree_types": ["development", "testing", "examples"]
   },
   "general": {
     "description": "General purpose decision trees",
     "directory": "general",
-    "tree_types": [
-      "personal",
-      "workflows",
-      "troubleshooting"
-    ]
+    "tree_types": ["personal", "workflows", "troubleshooting"]
   }
 }

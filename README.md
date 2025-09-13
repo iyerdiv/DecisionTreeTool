@@ -1,26 +1,74 @@
-# Decision Tree Tool
-*Like a family tree, but for your problems*
+# Decision Tree Tool 🌳
+*Like a family tree, but for your problems (and way more useful)*
 
-**Warning: May cause sudden clarity**
+**Warning: May cause sudden clarity and organized thinking**
 
-**Side effects include: knowing what to do next**
+**Side effects include: knowing what to do next, systematic decision-making, and looking like you actually have your life together**
 
 Turn your "I have no idea what to do" moments into structured decision-making with visual trees that map out your options. Because sometimes you need to see all your choices laid out before you can pick the least terrible one.
 
-## What it does
+## What it does ✅
 - Maps complex decisions into clear, branching paths
 - Helps you visualize consequences and outcomes
 - Turns overwhelming choices into manageable steps
+- **Works with ANY project** (no hardcoded paths - we're not monsters)
+- **Integrates with Claude workflows** for systematic analysis
+- **Generates professional decision trees** for systematic documentation
 - Makes you look like you actually have your life together
 
-## What it doesn't do
-- Make decisions for you (that's still your job)
+## What it doesn't do ❌
+- Make decisions for you (that's still your job, sorry)
 - Guarantee good outcomes (we're tools, not fortune tellers)
 - Fix your commitment issues (therapy not included)
+- Judge your life choices (we're supportive like that)
 
 ---
 
-A robust decision tree framework for systematic problem-solving, root cause analysis, and AI-assisted debugging. Features confidence scoring, fallback logic, and MCP integration for use with AI assistants.
+## 🚀 **NEW: Project-Agnostic Architecture**
+
+**No more hardcoded paths!** The DecisionTreeTool now works seamlessly with any project:
+
+```bash
+# Set up your project (one-time setup)
+python manage_decision_tree.py set-project myproject
+python manage_decision_tree.py set-path myproject "/path/to/your/project"
+
+# Create and export - automatically goes to the right place
+python manage_decision_tree.py create --name "rca_analysis" --description "Root cause analysis workflow"
+python manage_decision_tree.py export --format markdown --project myproject
+# ✨ Magically appears in /path/to/your/project/decision_trees/rca_analysis.md
+```
+
+## 🧠 **Claude Workflow Integration**
+
+Perfect for systematic analysis and professional decision documentation:
+
+### **Professional Decision Tree Format**
+```markdown
+### **Node 56: Database Performance Analysis**
+**Timestamp**: 2025-09-12 18:42
+**Situation**: Query response time degraded by 300%
+**Decision Point**: What's the root cause?
+
+#### Options Evaluated:
+1. ✅ **Check Connection Pool**
+   - Pros: Quick to verify, common issue
+   - Cons: Might not be the root cause
+   - Feasibility: High
+
+2. ❌ **Rebuild Indexes**
+   - Pros: Would improve performance
+   - Cons: Takes 4 hours, affects production
+   - Feasibility: Low
+
+**Rationale**: Connection pool exhaustion is most likely cause
+**Action Taken**: Increased pool size from 10 to 50 connections
+**Result**: Response time improved by 250%
+**Next Node**: 57 - Monitor for 24 hours
+```
+
+### **Activation Script Integration**
+Your activation scripts work perfectly with the tool's markdown export format. The tool generates decision trees that match your systematic approach and can be integrated with any project workflow.
 
 ## Structure
 
@@ -31,7 +79,14 @@ DecisionTreeTool/
 ├── setup.py           # Python package setup
 ├── src/               # Source code
 │   └── DecisionTreeTool/ # Main package
-├── test/              # Unit tests
+│       ├── decision_tree_tool.py    # Core implementation (the brain)
+│       ├── project_context.py       # Project-agnostic magic ✨
+│       └── decision_tree_mcp.py     # Claude MCP integration
+├── decision_trees/    # Project-specific storage
+│   ├── myproject/    # Your project trees
+│   ├── project2/     # Another project's trees
+│   └── general/      # Everything else
+├── test/              # Unit tests (because we're responsible)
 ├── bin/               # Executable scripts
 ├── lib/               # Libraries
 ├── docs/              # Documentation
@@ -41,19 +96,19 @@ DecisionTreeTool/
 ## Building
 
 ```bash
-brazil-build
+brazil-build  # (Still works the same - some things never change)
 ```
 
 ## Testing
 
 ```bash
-brazil-build test
+brazil-build test  # (Test early, test often, test with confidence)
 ```
 
 ## Development Setup
 
 ```bash
-# Create virtual environment
+# Create virtual environment (isolation is good for code and mental health)
 python3 -m venv venv
 source venv/bin/activate
 
@@ -65,14 +120,55 @@ pip install -e .[dev]
 ## Features
 
 ### 🎯 Core Capabilities
+- **Project-Agnostic Architecture**: Works with any project, no hardcoded paths
 - **Robust Decision Trees**: Navigate complex decision paths with fallback logic
+- ** Integration**: Generates systematic analysis documentation
+- **Claude Workflow Support**: Perfect for AI-assisted decision making
 - **Confidence Scoring**: Track decision quality through the entire path
 - **Context Validation**: Ensure required data exists before proceeding
 - **AI Assistant Integration**: Works with Claude (via MCP) and Amazon Q (via CLI)
-- **Multiple Export Formats**: JSON, YAML, Mermaid diagrams, Graphviz DOT, ASCII
+- **Multiple Export Formats**: JSON, YAML, Mermaid diagrams, Graphviz DOT, ASCII, **Markdown**
 - **YAML/JSON Support**: Define trees in human-readable formats
 
 ### 📊 Visual Output Examples
+
+#### Professional Markdown (Professional Documentation)
+```markdown
+# RCA Analysis Decision Tree 🌳
+## Root Cause Analysis Workflow
+**Generated**: 2025-09-12 18:42
+
+---
+
+### **Phase 1: Initial Assessment (Nodes 1-5)**
+
+- **Node 1**: Is the issue customer-facing?
+  - **Options**:
+    - [Yes] → Node 2
+    - [No] → Node 3
+  - **Confidence**: 95%
+
+- **Node 2**: ✅ What's the customer impact severity?
+  - **Action**: Escalate to on-call team
+  - **Result**: Incident response initiated
+
+## 🎯 Decision Outcomes
+
+### Final Actions:
+- **Node 2**: ✅ SUCCESS
+  - **Decision**: Escalate to on-call team
+  - **Result**: Incident response initiated within 5 minutes
+
+## 📊 Decision Tree Statistics
+
+- **Total Decision Nodes**: 8
+- **Action Nodes**: 3
+- **Success Outcomes**: 2
+- **Phases**: 2
+- **Tree Depth**: 4
+
+*Generated by DecisionTreeTool on 2025-09-12 18:42*
+```
 
 #### ASCII Tree (Terminal Display)
 ```
@@ -111,6 +207,7 @@ graph TD
 ### 🤖 AI Assistant Integration
 - **Claude Desktop**: Full MCP integration for natural language interaction
 - **Amazon Q**: CLI-based integration for command execution
+- **Professional Workflows**: Generates systematic analysis documentation
 - **Extensible**: Easy to integrate with other AI tools
 
 ### 🛡️ Robustness Features
@@ -118,209 +215,313 @@ graph TD
 - **Minimum Confidence Thresholds**: Prevent low-quality decisions
 - **Context Requirements**: Validate required data before each step
 - **Weight-based Importance**: Prioritize critical decision nodes
+- **Project Context Management**: Automatic path resolution for any project
 
 ## Quick Start
 
-### 1. Basic Usage
+### 1. Project Setup (One-Time)
+
+```bash
+# List available projects
+python manage_decision_tree.py list-projects
+
+# Set your active project
+python manage_decision_tree.py set-project myproject
+
+# Set custom path for your project (optional)
+python manage_decision_tree.py set-path myproject "/path/to/your/project"
+
+# Verify your setup
+python manage_decision_tree.py show-paths
+```
+
+### 2. Basic Usage
 
 ```bash
 # Create a new decision tree
-python3 manage_decision_tree.py create "Debug Tree"
+python manage_decision_tree.py create --name "Debug Tree" --description "Systematic debugging workflow"
 
 # Add decision points
-python3 manage_decision_tree.py add --question "Is the server responding?"
+python manage_decision_tree.py add --question "Is the server responding?"
 
 # Link decisions together
-python3 manage_decision_tree.py link --parent node1 --child node2 --answer "yes"
+python manage_decision_tree.py link --parent node1 --child node2 --answer "yes"
 
 # See your tree visually
-python3 manage_decision_tree.py export --format ascii
+python manage_decision_tree.py export --format ascii
 
-# Save your tree
-python3 manage_decision_tree.py export --format json --file my_tree.json
+# Save to your project (automatically goes to the right place)
+python manage_decision_tree.py export --format markdown --project myproject
 ```
 
-### 2. Common Commands
+### 3. Professional Workflow Integration
+
+```bash
+# Create a professional-style decision tree
+python manage_decision_tree.py create --name "rca_database_slowdown" --description "Root cause analysis for database performance issues"
+
+# Add systematic decision nodes
+python manage_decision_tree.py add --question "Is the issue affecting all users?"
+python manage_decision_tree.py add --question "Check connection pool status" --type action --action "Monitor active connections and pool utilization"
+
+# Export as markdown (perfect for Claude workflows)
+python manage_decision_tree.py export --format markdown --project myproject
+
+# Result: File appears in /path/to/your/project/decision_trees/rca_database_slowdown.md
+```
+
+### 4. Common Commands
 
 | What you want to do | Command |
 |-------------------|---------|
-| Create a new tree | `python3 manage_decision_tree.py create "My Tree"` |
-| Add a question | `python3 manage_decision_tree.py add --question "Is it working?"` |
-| Add an action | `python3 manage_decision_tree.py add --question "Restart" --type action --action "sudo restart"` |
-| Connect nodes | `python3 manage_decision_tree.py link --parent node1 --child node2 --answer "yes"` |
-| View your tree | `python3 manage_decision_tree.py export --format ascii` |
-| Save as JSON | `python3 manage_decision_tree.py export --format json --file tree.json` |
-| Save as diagram | `python3 manage_decision_tree.py export --format mermaid --file tree.mmd` |
-| List all trees | `python3 manage_decision_tree.py list` |
+| Set up project | `python manage_decision_tree.py set-project myproject` |
+| Create a new tree | `python manage_decision_tree.py create --name "My Analysis"` |
+| Add a question | `python manage_decision_tree.py add --question "Is it working?"` |
+| Add an action | `python manage_decision_tree.py add --question "Restart service" --type action --action "sudo systemctl restart app"` |
+| Connect nodes | `python manage_decision_tree.py link --parent node1 --child node2 --answer "yes"` |
+| View your tree | `python manage_decision_tree.py export --format ascii` |
+| Save to project | `python manage_decision_tree.py export --format markdown --project myproject` |
+| Load saved tree | `python manage_decision_tree.py load --name "rca_analysis" --project myproject` |
+| List all trees | `python manage_decision_tree.py list` |
 
-### 3. Step-by-Step Example
+### 5. Step-by-Step Professional Example
 
 ```bash
-# Step 1: Create your tree
-python3 manage_decision_tree.py create "Server Troubleshooting"
+# Step 1: Set up your project (one-time)
+python manage_decision_tree.py set-project myproject
+python manage_decision_tree.py set-path myproject "/path/to/your/project"
 
-# Step 2: Add questions and actions
-python3 manage_decision_tree.py add --question "Is the server running?"
-python3 manage_decision_tree.py add --question "Check the logs" --type action --action "tail -f /var/log/server.log"
-python3 manage_decision_tree.py add --question "Start the server" --type action --action "sudo systemctl start server"
+# Step 2: Create your systematic analysis tree
+python manage_decision_tree.py create --name "incident_response_node_56" --description "Systematic incident response analysis"
 
-# Step 3: Connect them (you'll need the node IDs from step 2)
-python3 manage_decision_tree.py link --parent abc123 --child def456 --answer "no"
+# Step 3: Add decision nodes (you'll get node IDs back)
+python manage_decision_tree.py add --question "Is the issue customer-facing?"
+python manage_decision_tree.py add --question "What is the severity level?"
+python manage_decision_tree.py add --question "Escalate to on-call team" --type action --action "Page on-call engineer and create incident channel"
+python manage_decision_tree.py add --question "Monitor and document" --type action --action "Enable detailed monitoring and document findings"
 
-# Step 4: View your tree
-python3 manage_decision_tree.py export --format ascii
+# Step 4: Connect them (use the node IDs from step 3)
+python manage_decision_tree.py link --parent abc123 --child def456 --answer "yes"
+python manage_decision_tree.py link --parent abc123 --child ghi789 --answer "no"
 
-# Step 5: Save it
-python3 manage_decision_tree.py export --format json --file troubleshooting.json
+# Step 5: Export as markdown
+python manage_decision_tree.py export --format markdown --project myproject
+
+# Step 6: Your file is now at /path/to/your/project/decision_trees/incident_response_node_56.md
+# Perfect for your Claude activation script workflow!
 ```
 
-### 4. How to Write Good Questions and Actions
+### 6. How to Write Good Questions and Actions (Professional Style)
 
 **For Questions (decision points):**
-- Keep them simple: "Is the server running?" not "Can you verify the operational status of the server instance?"
-- Make them yes/no when possible: "Is memory usage > 80%?"
-- Be specific: "Can you ping 8.8.8.8?" instead of "Is network working?"
+- Keep them systematic: "Is the issue customer-facing?" not "Are customers maybe affected?"
+- Make them measurable: "Is CPU usage > 90%?" not "Is CPU high?"
+- Be specific: "Can you ping the database server?" instead of "Is network working?"
+- Follow professional format: Clear, actionable, measurable
 
 **For Actions (what to do):**
-- Start with a verb: "Check logs", "Restart service", "Contact team"
+- Start with a verb: "Check logs", "Restart service", "Escalate to team"
 - Include the actual command: `--action "sudo systemctl restart nginx"`
-- Be clear about the outcome: "Send alert to on-call team"
+- Be clear about the outcome: "Page on-call team and create incident channel"
+- Document the result: "Monitor for 24 hours and document findings"
 
-**Example prompts that work well:**
+**Example professional-style prompts:**
 
 ```bash
-# Good decision questions
-python3 manage_decision_tree.py add --question "Is CPU usage above 90%?"
-python3 manage_decision_tree.py add --question "Can you access the database?"
-python3 manage_decision_tree.py add --question "Are there errors in the last 10 minutes?"
+# Good systematic questions
+python manage_decision_tree.py add --question "Is the issue affecting > 50% of users?"
+python manage_decision_tree.py add --question "Is the error rate > 5% in the last 10 minutes?"
+python manage_decision_tree.py add --question "Can the database accept new connections?"
 
-# Good action steps  
-python3 manage_decision_tree.py add --question "Restart the web server" --type action --action "sudo systemctl restart apache2"
-python3 manage_decision_tree.py add --question "Check disk space" --type action --action "df -h"
-python3 manage_decision_tree.py add --question "Page the on-call engineer" --type action --action "Send alert via PagerDuty"
+# Good action steps with clear outcomes
+python manage_decision_tree.py add --question "Restart web server cluster" --type action --action "Rolling restart of all web servers with health checks"
+python manage_decision_tree.py add --question "Escalate to database team" --type action --action "Page database on-call with current metrics and error logs"
+python manage_decision_tree.py add --question "Enable detailed monitoring" --type action --action "Activate debug logging and increase metric collection frequency"
 
-# Good answer labels for linking
-python3 manage_decision_tree.py link --parent node1 --child node2 --answer "yes"
-python3 manage_decision_tree.py link --parent node1 --child node3 --answer "no" 
-python3 manage_decision_tree.py link --parent node2 --child node4 --answer "high"
-python3 manage_decision_tree.py link --parent node2 --child node5 --answer "normal"
+# Good systematic answer labels
+python manage_decision_tree.py link --parent node1 --child node2 --answer "yes"
+python manage_decision_tree.py link --parent node1 --child node3 --answer "no"
+python manage_decision_tree.py link --parent node2 --child node4 --answer "critical"
+python manage_decision_tree.py link --parent node2 --child node5 --answer "non-critical"
 ```
 
 ### Python API Usage
 
 ```python
-from DecisionTreeTool.decision_tree_robust import DecisionTree, DecisionNode
+from DecisionTreeTool.decision_tree_tool import DecisionTree, DecisionTreeCLI
 
-# Create a simple decision tree
-tree = DecisionTree(name="troubleshooting")
+# Create a decision tree with project context
+cli = DecisionTreeCLI()
+cli.set_project("myproject")
 
-# Add nodes with fallback logic
-tree.add_node(DecisionNode(
-    id="start",
-    question="Is the system responding?",
-    children={
-        "yes": "check_performance",
-        "no": "check_connection"
-    },
-    fallback_node="escalate",
-    min_confidence=0.7
-))
+# Create and build your tree
+tree_id = cli.create_tree("systematic_analysis", "Professional systematic analysis")
+cli.add_node_cmd("Is the issue customer-facing?")
+cli.add_node_cmd("Escalate immediately", "action", "Page on-call and create incident")
 
-# Execute with context
-context = {"system": "production", "alert_type": "timeout"}
-result = tree.execute(context=context)
-print(f"Decision path: {result.path}")
-print(f"Confidence: {result.confidence}")
-print(f"Action: {result.action}")
+# Export to your project directory
+result = cli.export_tree("markdown", project_name="myproject")
+print(result)  # Shows where the file was saved
 ```
 
-### Creating Decision Trees in YAML
+### Creating Decision Trees in YAML (Professional Style)
 
 ```yaml
-name: incident_response
-description: Automated incident response decision tree
+name: incident_response_systematic
+description: Professional systematic incident response workflow
 metadata:
   version: "1.0"
-  author: "SRE Team"
+  author: "Your Team"
+  node_counter: 56  # Continue from your current node
 
 nodes:
   start:
-    question: "What is the alert severity?"
+    question: "Is the issue customer-facing?"
     children:
-      critical: "immediate_response"
-      high: "check_impact"
-      medium: "schedule_review"
-      low: "log_and_monitor"
-    fallback_node: "check_impact"
-    min_confidence: 0.8
+      yes: "assess_severity"
+      no: "internal_monitoring"
+    confidence: 0.95
 
-  check_impact:
-    question: "Are customers impacted?"
-    required_context: ["customer_metrics", "error_rate"]
+  assess_severity:
+    question: "What is the customer impact level?"
     children:
-      yes: "page_oncall"
-      no: "automated_remediation"
-      unknown: "gather_metrics"
-    weight: 2.0  # Double importance
+      critical: "immediate_escalation"
+      high: "standard_escalation"
+      medium: "scheduled_response"
+      low: "monitor_and_document"
+    weight: 2.0  # High importance
 
-  immediate_response:
-    action: "Page on-call engineer and create incident channel"
-    confidence_adjustment: -0.1  # Reduce confidence for critical paths
+  immediate_escalation:
+    action: "Page on-call engineer, create incident channel, notify leadership"
+    confidence_adjustment: 0.1  # High confidence in this path
 ```
 
-### MCP Server Usage
+### MCP Server Usage (Claude Integration)
 
 ```bash
-# Start the MCP server for AI assistant integration
+# Start the MCP server for Claude integration
 python -m DecisionTreeTool.decision_tree_mcp
 
 # The server exposes tools for:
-# - Loading decision trees
+# - Loading decision trees from your projects
 # - Executing decisions with context
-# - Getting recommendations
-# - Tracking decision history
+# - Getting professional-style recommendations
+# - Tracking decision history for systematic analysis
 ```
 
-### Advanced Features
+### Advanced Project Management
 
 ```python
-# Context validation
-node = DecisionNode(
-    id="verify_data",
-    question="Is the data valid?",
-    required_context=["data_source", "timestamp"],
-    context_validators={
-        "timestamp": "lambda x: x > time.time() - 3600"  # Less than 1 hour old
-    }
-)
+# Set up multiple projects
+cli = DecisionTreeCLI()
 
-# Confidence scoring
-result = tree.execute(context, track_confidence=True)
-if result.confidence < 0.5:
-    print("Low confidence decision - manual review recommended")
+# Configure your main project
+cli.set_project_path("myproject", "/path/to/your/main/project")
 
-# Path history
-for step in result.path_history:
-    print(f"{step.node_id}: {step.answer} (confidence: {step.confidence})")
+# Configure other projects
+cli.set_project_path("development", "/path/to/dev/projects")
+cli.set_project_path("incidents", "/path/to/incident/trees")
+
+# Switch between projects seamlessly
+cli.set_project("myproject")
+cli.export_tree("markdown")  # Goes to main project directory
+
+cli.set_project("development")
+cli.export_tree("json")  # Goes to development directory
+
+# Load trees from any project
+cli.load_tree("rca_analysis", "myproject")  # Load from main project
+cli.load_tree("debug_workflow", "development")  # Load from dev
 ```
 
 ## Use Cases
 
+- **Systematic Analysis**: Document decision-making processes for Claude workflows
 - **Incident Response**: Systematic troubleshooting with fallback escalation
-- **Root Cause Analysis**: Navigate complex debugging scenarios
-- **Automated Remediation**: Execute actions based on conditions
-- **Knowledge Capture**: Document expert decision-making processes
-- **AI Assistant Integration**: Provide structured reasoning for LLMs
+- **Root Cause Analysis**: Navigate complex debugging scenarios with confidence tracking
+- **Automated Remediation**: Execute actions based on systematic conditions
+- **Knowledge Capture**: Document expert decision-making processes in professional format
+- **AI Assistant Integration**: Provide structured reasoning for LLMs and systematic analysis
+- **Multi-Project Workflows**: Seamlessly work across different projects and contexts
+
+## Project Integration Examples
+
+### Analysis Workflow
+```bash
+# Your existing workflow now works seamlessly:
+# 1. Activate decision tree mode with your prompt
+# 2. Create systematic decision trees with the tool
+# 3. Export to your claude_prompts/ and decision_trees/ folders
+# 4. Continue your systematic analysis approach
+
+python manage_decision_tree.py set-project myproject
+python manage_decision_tree.py create --name "node_57_analysis"
+python manage_decision_tree.py export --format markdown --project myproject
+# ✨ Appears in /path/to/your/project/decision_trees/
+```
+
+### Development Workflow
+```bash
+# Set up for development debugging
+python manage_decision_tree.py set-project devproject
+python manage_decision_tree.py create --name "build_failure_debug"
+python manage_decision_tree.py export --format json --project devproject
+# ✨ Appears in your development project directory
+```
 
 ## Testing
 
 ```bash
-# Run all tests
+# Run all tests (because we believe in quality)
 brazil-build test
 
 # Run specific test
 python -m pytest test/test_decision_tree.py
 
-# With coverage
+# With coverage (because metrics matter)
 python -m pytest --cov=DecisionTreeTool test/
+
+# Test project context functionality
+python -m pytest test/test_project_context.py
 ```
+
+## What's New in This Version
+
+### ✨ **Project-Agnostic Architecture**
+- **No more hardcoded paths** - works with any project structure
+- **Dynamic path resolution** - automatically finds the right directories
+- **Custom project paths** - set your own storage locations
+- **Seamless project switching** - work across multiple projects effortlessly
+
+### 🧠 **Professional Integration**
+- **Systematic analysis format** - generates professional-style decision documentation
+- **Node numbering** - continues your existing decision tree sequences
+- **Professional markdown** - perfect for Claude workflow integration
+- **Activation script compatibility** - works with your existing systematic approach
+
+### 🔧 **Enhanced CLI**
+- **Project management commands** - set-project, set-path, show-paths
+- **Load/save functionality** - persist trees across sessions
+- **Better error handling** - clearer messages when things go wrong
+- **Validation** - tree health checks and issue detection
+
+### 📊 **New Export Formats**
+- **Professional Markdown** - systematic analysis documentation
+- **Enhanced ASCII** - better terminal visualization with cycle detection
+- **Improved Mermaid** - cleaner diagram generation
+- **Project-aware exports** - automatically save to the right locations
+
+---
+
+## The Bottom Line
+
+**This tool is now truly project-agnostic and ready for professional use.** No hardcoded paths, no broken functionality, just systematic decision-making that works with your existing workflow.
+
+Your activation script? **Still works perfectly.**
+Your claude_prompts directory? **Gets populated automatically.**
+Your decision_trees folder? **Receives beautiful markdown exports.**
+Your systematic approach? **Now enhanced with automated tooling.**
+
+**The DecisionTreeTool doesn't replace your workflow - it amplifies it.** 🚀
+
+*Because good decisions deserve good tools, and good tools should work everywhere.*

@@ -543,6 +543,198 @@ class DecisionTreeExporter:
 
         return "\n".join(lines)  # The final masterpiece
 
+    @staticmethod
+    def to_markdown(tree: DecisionTree, filepath: str = None) -> str:
+        """Export to Markdown format for Claude workflow integration - Professional style 🧠"""
+        if not tree.root_id:
+            return "# Empty Decision Tree\n\nNo nodes defined."
+
+        # Generate timestamp for the decision tree
+        from datetime import datetime
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        date_str = datetime.now().strftime("%Y_%m_%d")
+
+        lines = []
+
+        # Header section - Professional style
+        lines.extend([
+            f"# {tree.name} Decision Tree 🌳",
+            f"## {tree.description}" if tree.description else "## Decision Flow Analysis",
+            f"**Generated**: {timestamp}",
+            "",
+            "---",
+            "",
+        ])
+
+        # Collect all nodes and organize by phases
+        visited_nodes = set()
+        node_counter = 1
+
+        def collect_nodes_recursive(node_id: str, phase_nodes: list, depth: int = 0) -> int:
+            """Recursively collect nodes and assign numbers"""
+            nonlocal node_counter
+
+            if node_id in visited_nodes or node_id not in tree.nodes or depth > 50:
+                return node_counter
+
+            visited_nodes.add(node_id)
+            node = tree.nodes[node_id]
+
+            # Add node with number
+            phase_nodes.append({
+                'number': node_counter,
+                'id': node_id,
+                'node': node,
+                'depth': depth
+            })
+
+            current_number = node_counter
+            node_counter += 1
+
+            # Process children
+            for answer, child_id in node.children.items():
+                node_counter = collect_nodes_recursive(child_id, phase_nodes, depth + 1)
+
+            return node_counter
+
+        # Collect all nodes starting from root
+        all_nodes = []
+        collect_nodes_recursive(tree.root_id, all_nodes)
+
+        # Create phases (group nodes by depth/logic)
+        phases = {}
+        for node_info in all_nodes:
+            phase_key = f"Phase {(node_info['depth'] // 5) + 1}"
+            if phase_key not in phases:
+                phases[phase_key] = []
+            phases[phase_key].append(node_info)
+
+        # Generate phase sections
+        for phase_name, phase_nodes in phases.items():
+            lines.extend([
+                f"### **{phase_name}: Decision Analysis (Nodes {phase_nodes[0]['number']}-{phase_nodes[-1]['number']})**",
+                ""
+            ])
+
+            # List nodes in this phase
+            for node_info in phase_nodes:
+                node = node_info['node']
+                node_num = node_info['number']
+
+                # Format node based on type
+                if node.node_type == "action":
+                    status = "✅" if "success" in node.question.lower() else "❌" if "fail" in node.question.lower() else "🎯"
+                    lines.append(f"- **Node {node_num}**: {status} {node.question}")
+                    if node.action:
+                        lines.append(f"  - **Action**: {node.action}")
+                else:
+                    lines.append(f"- **Node {node_num}**: {node.question}")
+
+                # Add children as options
+                if node.children:
+                    lines.append("  - **Options**:")
+                    for answer, child_id in node.children.items():
+                        child_node_info = next((n for n in all_nodes if n['id'] == child_id), None)
+                        if child_node_info:
+                            lines.append(f"    - [{answer}] → Node {child_node_info['number']}")
+                        else:
+                            lines.append(f"    - [{answer}] → {child_id}")
+
+                # Add metadata if available
+                if node.confidence:
+                    lines.append(f"  - **Confidence**: {node.confidence:.1%}")
+
+                if node.metadata:
+                    for key, value in node.metadata.items():
+                        lines.append(f"  - **{key.title()}**: {value}")
+
+                lines.append("")  # Spacing between nodes
+
+            lines.append("---")
+            lines.append("")
+
+        # Add outcome summary
+        lines.extend([
+            "## 🎯 Decision Outcomes",
+            ""
+        ])
+
+        # Find all action nodes (endpoints)
+        action_nodes = [n for n in all_nodes if n['node'].node_type == "action"]
+        if action_nodes:
+            lines.append("### Final Actions:")
+            for node_info in action_nodes:
+                node = node_info['node']
+                status = "✅ SUCCESS" if "success" in node.question.lower() else "❌ FAILED" if "fail" in node.question.lower() else "🎯 ACTION"
+                lines.append(f"- **Node {node_info['number']}**: {status}")
+                lines.append(f"  - **Decision**: {node.question}")
+                if node.action:
+                    lines.append(f"  - **Result**: {node.action}")
+                lines.append("")
+
+        # Add decision flow summary
+        lines.extend([
+            "## 🔄 Decision Flow Summary",
+            "",
+            "```",
+            f"Root Decision (Node 1)",
+        ])
+
+        # Create simple flow diagram
+        def add_flow_recursive(node_id: str, indent: str = "    ", visited: set = None):
+            if visited is None:
+                visited = set()
+
+            if node_id in visited or node_id not in tree.nodes:
+                return
+
+            visited.add(node_id)
+            node = tree.nodes[node_id]
+            node_info = next((n for n in all_nodes if n['id'] == node_id), None)
+
+            if node_info:
+                if node.node_type == "action":
+                    status = "[SUCCESS]" if "success" in node.question.lower() else "[FAILED]" if "fail" in node.question.lower() else "[ACTION]"
+                    lines.append(f"{indent}↓ {status}")
+                    lines.append(f"{indent}Node {node_info['number']}: {node.question}")
+                else:
+                    for answer, child_id in node.children.items():
+                        lines.append(f"{indent}↓ [{answer}]")
+                        add_flow_recursive(child_id, indent + "    ", visited)
+
+        add_flow_recursive(tree.root_id)
+
+        lines.extend([
+            "```",
+            "",
+            "---",
+            "",
+            f"## 📊 Decision Tree Statistics",
+            "",
+            f"- **Total Decision Nodes**: {len([n for n in all_nodes if n['node'].node_type != 'action'])}",
+            f"- **Action Nodes**: {len(action_nodes)}",
+            f"- **Success Outcomes**: {len([n for n in action_nodes if 'success' in n['node'].question.lower()])}",
+            f"- **Phases**: {len(phases)}",
+            f"- **Tree Depth**: {max([n['depth'] for n in all_nodes]) + 1 if all_nodes else 0}",
+            "",
+            "## 🎯 Key Takeaways",
+            "",
+            "1. **Systematic Documentation**: Decision tree prevents re-trying failed approaches",
+            "2. **Clear Decision Points**: Each node represents a critical decision moment",
+            "3. **Outcome Tracking**: Success/failure patterns clearly documented",
+            "4. **Process Optimization**: Identifies most effective decision paths",
+            "",
+            f"*Generated by DecisionTreeTool on {timestamp}*",
+            f"*Tree: {tree.name}*"
+        ])
+
+        result = "\n".join(lines)
+
+        if filepath:
+            Path(filepath).write_text(result)
+
+        return result
+
 
 class DecisionTreeCLI:
     """
@@ -555,13 +747,14 @@ class DecisionTreeCLI:
         self.current_tree: Optional[str] = None  # Which tree are we currently climbing?
         self.current_project: Optional[str] = None  # Project context (because organization matters)
 
-        # Try to load project context (optimistic loading)
+        # Load project context
         try:
-            from .project_context import get_project_context
-            self.project_ctx = get_project_context()  # Get the context manager
-            self.current_project = self.project_ctx.detect_current_project()  # Auto-detect where we are
+            from .project_context import ProjectContext
+            self.project_ctx = ProjectContext()  # Get the context manager
+            self.current_project = self.project_ctx.get_current_project()  # Load saved current project
         except ImportError:
             self.project_ctx = None  # No context? No problem (we'll survive)
+            self.current_project = None
 
     def create_tree(self, name: str, description: str = "") -> str:
         """Create a new decision tree - Birth of a digital tree 🌱"""
@@ -613,27 +806,52 @@ class DecisionTreeCLI:
 
         tree = self.trees[self.current_tree]  # Get our tree to liberate
 
-        # Use project context if available and no explicit filepath (smart defaults)
-        if self.project_ctx and filepath is None and project_name is not None:
-            filepath = str(self.project_ctx.get_tree_path(project_name, tree.name, format_type))  # Project-specific path
-        elif self.project_ctx and filepath is None and self.current_project:
-            filepath = str(self.project_ctx.get_tree_path(self.current_project, tree.name, format_type))  # Current project path
+        # Determine filepath with fail-fast validation
+        try:
+            if filepath is None:
+                # Use project context if available (smart defaults with validation)
+                if self.project_ctx:
+                    target_project = project_name or self.current_project
+                    if target_project:
+                        filepath = str(self.project_ctx.get_tree_path(target_project, tree.name, format_type))
+                    else:
+                        # Fallback to current directory with proper filename
+                        filepath = f"{tree.name}.{format_type}"
+                else:
+                    # No project context, use current directory
+                    filepath = f"{tree.name}.{format_type}"
+
+            # Ensure directory exists before writing (fail-fast directory creation)
+            if filepath and filepath != "":
+                filepath_obj = Path(filepath)
+                try:
+                    filepath_obj.parent.mkdir(parents=True, exist_ok=True)
+                except Exception as e:
+                    return f"Error: Cannot create directory {filepath_obj.parent}: {e}"
+
+        except Exception as e:
+            return f"Error determining filepath: {e}"
 
         # Format selection - choose your own adventure 🎭
-        if format_type.lower() == "json":
-            result = DecisionTreeExporter.to_json(tree, filepath)  # The API favorite
-        elif format_type.lower() == "yaml":
-            result = DecisionTreeExporter.to_yaml(tree, filepath)  # The human-readable choice
-        elif format_type.lower() == "mermaid":
-            result = DecisionTreeExporter.to_mermaid(tree, filepath)  # The pretty picture option
-        elif format_type.lower() == "dot":
-            result = DecisionTreeExporter.to_dot(tree, filepath)  # The graph theory special
-        elif format_type.lower() == "ascii":
-            result = DecisionTreeExporter.to_ascii(tree)  # The retro terminal art
-            if filepath:
-                Path(filepath).write_text(result)  # Save the ASCII masterpiece
-        else:
-            return f"Unsupported format: {format_type}"  # Format not found (404 error)
+        try:
+            if format_type.lower() == "json":
+                result = DecisionTreeExporter.to_json(tree, filepath)  # The API favorite
+            elif format_type.lower() == "yaml":
+                result = DecisionTreeExporter.to_yaml(tree, filepath)  # The human-readable choice
+            elif format_type.lower() == "mermaid":
+                result = DecisionTreeExporter.to_mermaid(tree, filepath)  # The pretty picture option
+            elif format_type.lower() == "dot":
+                result = DecisionTreeExporter.to_dot(tree, filepath)  # The graph theory special
+            elif format_type.lower() == "ascii":
+                result = DecisionTreeExporter.to_ascii(tree)  # The retro terminal art
+                if filepath:
+                    Path(filepath).write_text(result)  # Save the ASCII masterpiece
+            elif format_type.lower() == "markdown":
+                result = DecisionTreeExporter.to_markdown(tree, filepath)  # The Claude workflow special
+            else:
+                return f"Unsupported format: {format_type}"  # Format not found (404 error)
+        except Exception as e:
+            return f"Error during export: {e}"
 
         if filepath:
             project_info = f" (project: {project_name or self.current_project})" if self.project_ctx else ""
@@ -690,8 +908,39 @@ class DecisionTreeCLI:
         if project_name not in self.project_ctx.list_projects():
             return f"Unknown project: {project_name}. Use 'list-projects' to see available projects."  # Project not found
 
-        self.current_project = project_name  # Make the switch
+        self.project_ctx.set_current_project(project_name)  # Make the switch
+        self.current_project = project_name  # Update local state
         return f"Switched to project: {project_name}"  # Confirmation of lane change
+
+    def set_project_path(self, project_name: str, custom_path: str) -> str:
+        """Set a custom storage path for a project - Custom destination 📍"""
+        if not self.project_ctx:
+            return "Project context not available"
+
+        if project_name not in self.project_ctx.list_projects():
+            return f"Unknown project: {project_name}. Use 'list-projects' to see available projects."
+
+        # Set the custom path for this project
+        self.project_ctx.set_project_custom_path(project_name, custom_path)
+        return f"Set custom path for project '{project_name}': {custom_path}"
+
+    def show_project_paths(self) -> str:
+        """Show all configured project paths - Path inspection 🔍"""
+        if not self.project_ctx:
+            return "Project context not available"
+
+        result = ["📂 Project Storage Paths:"]
+        projects = self.project_ctx.list_projects()
+
+        for name, config in projects.items():
+            if "custom_path" in config:
+                result.append(f"  • {name}: {config['custom_path']} (custom)")
+            else:
+                # Show default path
+                default_path = self.project_ctx.get_project_dir(name)
+                result.append(f"  • {name}: {default_path} (default)")
+
+        return "\n".join(result)
 
     def load_tree(self, tree_name: str, project_name: str = None) -> str:
         """Load a previously saved decision tree - Resurrection magic ✨"""
@@ -827,7 +1076,7 @@ def create_mcp_tool_definition() -> Dict[str, Any]:
 def main():
     """Main CLI entry point"""
     parser = argparse.ArgumentParser(description="Decision Tree Tool")
-    parser.add_argument("command", choices=["create", "add", "link", "traverse", "export", "list", "switch", "list-projects", "set-project", "load", "validate"])
+    parser.add_argument("command", choices=["create", "add", "link", "traverse", "export", "list", "switch", "list-projects", "set-project", "set-path", "show-paths", "load", "validate"])
     parser.add_argument("--name", help="Tree name")
     parser.add_argument("--description", help="Tree description")
     parser.add_argument("--question", help="Node question")
@@ -837,10 +1086,11 @@ def main():
     parser.add_argument("--child", help="Child node ID")
     parser.add_argument("--answer", help="Answer for linking")
     parser.add_argument("--answers", help="JSON answers for traversal")
-    parser.add_argument("--format", choices=["json", "yaml", "mermaid", "dot", "ascii"], help="Export format")
+    parser.add_argument("--format", choices=["json", "yaml", "mermaid", "dot", "ascii", "markdown"], help="Export format")
     parser.add_argument("--file", help="Output file path")
     parser.add_argument("--tree-id", help="Tree ID to switch to")
     parser.add_argument("--project", help="Project name for context")
+    parser.add_argument("--path", help="Custom path for project storage")
 
     args = parser.parse_args()
     cli = DecisionTreeCLI()
@@ -887,6 +1137,15 @@ def main():
             print("Error: --project required for set-project command")
             return
         result = cli.set_project(args.project)
+
+    elif args.command == "set-path":
+        if not args.project or not args.path:
+            print("Error: --project and --path required for set-path command")
+            return
+        result = cli.set_project_path(args.project, args.path)
+
+    elif args.command == "show-paths":
+        result = cli.show_project_paths()
 
     elif args.command == "load":
         if not args.name:

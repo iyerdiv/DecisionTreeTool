@@ -1,24 +1,24 @@
 {
   "name": "DecisionTreeTool Project Completion",
-  "description": "Workflow for completing DecisionTreeTool development and transitioning back to OpsBrain",
-  "root_id": "dfc2079f",
-  "created_at": "2025-09-12T11:30:51.168677",
-  "updated_at": "2025-09-12T11:30:51.168793",
+  "description": "Workflow for completing DecisionTreeTool development and transitioning back to main project",
+  "root_id": "0f157dd1",
+  "created_at": "2025-09-12T19:10:27.308306",
+  "updated_at": "2025-09-12T19:10:27.308423",
   "nodes": {
-    "dfc2079f": {
-      "id": "dfc2079f",
+    "0f157dd1": {
+      "id": "0f157dd1",
       "question": "Are witty comments complete in all Python files?",
       "node_type": "condition",
       "children": {
-        "no": "7b5427f0",
-        "yes": "2a83ab4e"
+        "no": "6f85bbe8",
+        "yes": "c4006d60"
       },
       "action": null,
       "confidence": null,
       "metadata": {}
     },
-    "7b5427f0": {
-      "id": "7b5427f0",
+    "6f85bbe8": {
+      "id": "6f85bbe8",
       "question": "Add witty comments to remaining files",
       "node_type": "action",
       "children": {},
@@ -26,20 +26,20 @@
       "confidence": null,
       "metadata": {}
     },
-    "2a83ab4e": {
-      "id": "2a83ab4e",
+    "c4006d60": {
+      "id": "c4006d60",
       "question": "Are all features tested and working?",
       "node_type": "condition",
       "children": {
-        "no": "64f3fffa",
-        "yes": "298696ae"
+        "no": "c53e7405",
+        "yes": "3e459c65"
       },
       "action": null,
       "confidence": null,
       "metadata": {}
     },
-    "64f3fffa": {
-      "id": "64f3fffa",
+    "c53e7405": {
+      "id": "c53e7405",
       "question": "Fix failing tests and functionality",
       "node_type": "action",
       "children": {},
@@ -47,20 +47,20 @@
       "confidence": null,
       "metadata": {}
     },
-    "298696ae": {
-      "id": "298696ae",
+    "3e459c65": {
+      "id": "3e459c65",
       "question": "Is code committed to GitHub?",
       "node_type": "condition",
       "children": {
-        "no": "033fef63",
-        "yes": "99d4258f"
+        "no": "cfe14b46",
+        "yes": "5b3ece75"
       },
       "action": null,
       "confidence": null,
       "metadata": {}
     },
-    "033fef63": {
-      "id": "033fef63",
+    "cfe14b46": {
+      "id": "cfe14b46",
       "question": "Commit enhanced code to repository",
       "node_type": "action",
       "children": {},
@@ -68,20 +68,20 @@
       "confidence": null,
       "metadata": {}
     },
-    "99d4258f": {
-      "id": "99d4258f",
+    "5b3ece75": {
+      "id": "5b3ece75",
       "question": "Is documentation complete and engaging?",
       "node_type": "condition",
       "children": {
-        "no": "1f39d1c4",
-        "yes": "a4c28fd0"
+        "no": "f0fe938c",
+        "yes": "c45a9b08"
       },
       "action": null,
       "confidence": null,
       "metadata": {}
     },
-    "1f39d1c4": {
-      "id": "1f39d1c4",
+    "f0fe938c": {
+      "id": "f0fe938c",
       "question": "Update README and FUNCTIONALITY.md",
       "node_type": "action",
       "children": {},
@@ -89,54 +89,54 @@
       "confidence": null,
       "metadata": {}
     },
-    "a4c28fd0": {
-      "id": "a4c28fd0",
+    "c45a9b08": {
+      "id": "c45a9b08",
       "question": "Should we create a decision tree for this project?",
       "node_type": "condition",
       "children": {
-        "yes": "72d97b07",
-        "no": "a1a2a058"
+        "yes": "49f76570",
+        "no": "3b1c8dd4"
       },
       "action": null,
       "confidence": null,
       "metadata": {}
     },
-    "72d97b07": {
-      "id": "72d97b07",
+    "49f76570": {
+      "id": "49f76570",
       "question": "Create and save DecisionTreeTool project completion tree",
       "node_type": "action",
       "children": {
-        "completed": "a1a2a058"
+        "completed": "3b1c8dd4"
       },
       "action": "Document the project completion workflow as a decision tree for future reference",
       "confidence": null,
       "metadata": {}
     },
-    "a1a2a058": {
-      "id": "a1a2a058",
-      "question": "Ready to transition back to OpsBrain work?",
+    "3b1c8dd4": {
+      "id": "3b1c8dd4",
+      "question": "Ready to transition back to main project work?",
       "node_type": "condition",
       "children": {
-        "yes": "7d16cf20",
-        "no": "57a12a14"
+        "yes": "967636a8",
+        "no": "dfb00b7e"
       },
       "action": null,
       "confidence": null,
       "metadata": {}
     },
-    "7d16cf20": {
-      "id": "7d16cf20",
-      "question": "Update session context for OpsBrain transition",
+    "967636a8": {
+      "id": "967636a8",
+      "question": "Update session context for main project transition",
       "node_type": "action",
       "children": {
-        "completed": "b5f246d5"
+        "completed": "4fb398c4"
       },
-      "action": "Update NEXT_CLAUDE_PROMPT with OpsBrain context and current status",
+      "action": "Update NEXT_CLAUDE_PROMPT with main project context and current status",
       "confidence": null,
       "metadata": {}
     },
-    "57a12a14": {
-      "id": "57a12a14",
+    "dfb00b7e": {
+      "id": "dfb00b7e",
       "question": "Continue DecisionTreeTool development",
       "node_type": "action",
       "children": {},
@@ -144,12 +144,12 @@
       "confidence": null,
       "metadata": {}
     },
-    "b5f246d5": {
-      "id": "b5f246d5",
-      "question": "Switch context to OpsBrain RCA work",
+    "4fb398c4": {
+      "id": "4fb398c4",
+      "question": "Switch context to main project work",
       "node_type": "action",
       "children": {},
-      "action": "cd /Volumes/workplace && focus on OpsBrain incident analysis and bottleneck detection",
+      "action": "cd /Volumes/workplace && focus on main project analysis and development",
       "confidence": null,
       "metadata": {}
     }

@@ -1,5 +1,5 @@
 🌳 DecisionTreeTool Project Completion
-   Workflow for completing DecisionTreeTool development and transitioning back to OpsBrain
+   Workflow for completing DecisionTreeTool development and transitioning back to main project
 
 Root: Are witty comments complete in all Python files?
 ├── [no] Add witty comments to remaining files → Review and add engaging comments to all .py files with 30-something developer humor
@@ -11,11 +11,11 @@ Root: Are witty comments complete in all Python files?
             ├── [no] Update README and FUNCTIONALITY.md → Ensure README and FUNCTIONALITY.md reflect all new features with engaging tone
             └── [yes] Should we create a decision tree for this project?
                 ├── [yes] Create and save DecisionTreeTool project completion tree → Document the project completion workflow as a decision tree for future reference
-                │   └── [completed] Ready to transition back to OpsBrain work?
-                │       ├── [yes] Update session context for OpsBrain transition → Update NEXT_CLAUDE_PROMPT with OpsBrain context and current status
-                │       │   └── [completed] Switch context to OpsBrain RCA work → cd /Volumes/workplace && focus on OpsBrain incident analysis and bottleneck detection
+                │   └── [completed] Ready to transition back to main project work?
+                │       ├── [yes] Update session context for main project transition → Update NEXT_CLAUDE_PROMPT with main project context and current status
+                │       │   └── [completed] Switch context to main project work → cd /Volumes/workplace && focus on main project analysis and development
                 │       └── [no] Continue DecisionTreeTool development → Focus on additional DecisionTreeTool features or improvements
-                └── [no] Ready to transition back to OpsBrain work?
-                    ├── [yes] Update session context for OpsBrain transition → Update NEXT_CLAUDE_PROMPT with OpsBrain context and current status
-                    │   └── [completed] Switch context to OpsBrain RCA work → cd /Volumes/workplace && focus on OpsBrain incident analysis and bottleneck detection
+                └── [no] Ready to transition back to main project work?
+                    ├── [yes] Update session context for main project transition → Update NEXT_CLAUDE_PROMPT with main project context and current status
+                    │   └── [completed] Switch context to main project work → cd /Volumes/workplace && focus on main project analysis and development
                     └── [no] Continue DecisionTreeTool development → Focus on additional DecisionTreeTool features or improvements
