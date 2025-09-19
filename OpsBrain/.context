@@ -1,7 +1,0 @@
-PROJECT=OpsBrain
-PROJECT_DESC=Perfect Mile Sci Ops Brain
-PROJECT_DIR=/Volumes/workplace/DecisionTreeTool/OpsBrain
-TODAY_TREE=/Volumes/workplace/DecisionTreeTool/OpsBrain/trees/decision_tree_20250919.md
-PROJECT_VERSION=103
-GLOBAL_VERSION=8
-ACTIVATED=2025-09-19 08:00:13

@@ -35,12 +35,11 @@ logs/
 local/
 *.local
 
-# Project specific - exclude user decision trees but include project trees
-# Project-specific decision tree directories (examples)
-decision_trees/project1/
-decision_trees/project2/
-decision_trees/integration/
-decision_trees/general/
+# Project specific - exclude user project folders (not part of the tool)
+# These are work folders created by users, not part of the DecisionTreeTool itself
+OpsBrain/
+TestProject/
+# Add other project names here as needed
 temp_files/
 output/
 temp/
