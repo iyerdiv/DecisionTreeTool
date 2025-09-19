@@ -1,0 +1,30 @@
+Q, we have a data mismatch issue. Please run the diagnostic queries to find out what's actually in Heisenberg.
+
+## File to Run:
+/Volumes/workplace/DecisionTreeTool/OpsBrain/diagnose_data_issues_20250918.sql
+
+## What We're Checking:
+
+1. **Mercury Packages**: Do those 5 tracking IDs exist at all?
+2. **SWA Stations**: What stations have "SWA" in their name?
+3. **Top Stations**: Which stations have the most RUSH packages Sept 15-17?
+4. **Date Range**: What dates actually have data?
+5. **Tracking ID Format**: What prefixes are actually used?
+6. **High Dwell Stations**: Which stations have packages >200 min dwell?
+
+## This Will Help Us:
+- Understand why Mercury packages aren't found
+- Identify the correct station codes
+- Verify date ranges match
+- Find where the high-dwell bottlenecks actually are
+
+## Command:
+```bash
+cd /Volumes/workplace/DecisionTreeTool/OpsBrain
+PGPASSWORD='2w|:k0]!bY9&r~#T(yhn5=;$6D%;j*9yEO[z2}U[kCve8~F}2NTQV.b$ViZs4X.`' \
+psql -h superlab-na.db.amazon.com -p 8199 -d superlab -U iyerdiv \
+  -f diagnose_data_issues_20250918.sql \
+  -o diagnosis_results_20250918.txt
+```
+
+This will reveal what data we actually have access to!

@@ -1,0 +1,16 @@
+{
+  "file": "littles_law_analysis.csv",
+  "records": 1097,
+  "time_span_days": 5,
+  "total_inflow": 88557,
+  "avg_queue": 64.72798656257758,
+  "avg_wait_minutes": 4.7786106986856405,
+  "bottleneck_distribution": {
+    "Severe": 338,
+    "Critical": 269,
+    "Light": 187,
+    "Normal": 157,
+    "Moderate": 146
+  },
+  "data_structure": "CORRECT - has all needed fields"
+}

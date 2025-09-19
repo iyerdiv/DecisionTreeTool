@@ -1,0 +1,47 @@
+Q, please run this SWA1 validation query to match our analysis against Mercury's ground truth data.
+
+## Context:
+Mercury shows 90,955 defects at SWA1 with specific packages having extreme dwell times (267-2497 minutes). We need to validate that our analysis can identify the same bottlenecks.
+
+## Query Location:
+/Volumes/workplace/DecisionTreeTool/OpsBrain/swa1_validation_query.sql
+
+## What This Query Does:
+
+1. **Validation Against Mercury** (Section 1-3):
+   - Takes 5 specific packages Mercury flagged (2269, 267, 289, 2497, 266 min dwell)
+   - Calculates dwell using our method
+   - Compares to see if we match Mercury's numbers
+
+2. **Find All High-Dwell Packages** (Section 4):
+   - Searches SWA1 for ALL packages with >200 min dwell
+   - Shows how many match our 267-307 minute target range
+   - Identifies Missing DEA pattern
+
+3. **Little's Law Application** (Section 5):
+   - Calculates λ (arrival rate), L (inventory), W (wait time)
+   - Identifies peak bottleneck hours
+   - Shows which hours have worst congestion
+
+## Expected Results:
+- Should find ~90K defects if we match Mercury
+- Specific packages should have dwell within 10% of Mercury
+- Should identify 2-4pm bottleneck pattern
+- Missing DEA should be primary issue
+
+## How to Run:
+```bash
+cd /Volumes/workplace/DecisionTreeTool/OpsBrain
+PGPASSWORD='2w|:k0]!bY9&r~#T(yhn5=;$6D%;j*9yEO[z2}U[kCve8~F}2NTQV.b$ViZs4X.`' \
+psql -h superlab-na.db.amazon.com -p 8199 -d superlab -U iyerdiv \
+  -f swa1_validation_query.sql \
+  -o swa1_validation_results.txt
+```
+
+## Key Validation Points:
+1. Do our dwell calculations match Mercury's?
+2. Can we find the same high-dwell packages?
+3. Does Little's Law identify the bottleneck times?
+4. Is Missing DEA the root cause?
+
+This validation proves our analysis framework can detect the same operational issues that Mercury's defect system identifies, giving confidence in our approach for other stations.

@@ -1,0 +1,7 @@
+PROJECT=DecisionTreeTool
+PROJECT_DESC=DecisionTreeTool Project
+PROJECT_DIR=/Volumes/workplace/DecisionTreeTool/DecisionTreeTool
+TODAY_TREE=/Volumes/workplace/DecisionTreeTool/DecisionTreeTool/trees/decision_tree_20250919.md
+PROJECT_VERSION=3
+GLOBAL_VERSION=9
+ACTIVATED=2025-09-19 08:00:52

@@ -1,0 +1,29 @@
+Q, let's change approach - instead of looking for specific tracking IDs, let's find bottleneck PATTERNS.
+
+## File to Run:
+/Volumes/workplace/DecisionTreeTool/OpsBrain/find_bottleneck_patterns_20250918.sql
+
+## New Approach - Find Patterns Not Packages:
+
+1. **High Dwell Summary**: Find ANY packages with 3+ hour delays at ANY station
+2. **Bottleneck Stations**: Identify stations with consistent delay patterns
+3. **Peak Congestion Hours**: When do bottlenecks typically occur (12-8 PM)?
+4. **Sample High Dwell**: Get real examples of delayed packages
+5. **Best Station for Analysis**: Find station with most data for 5-minute analysis
+
+## Why This Is Better:
+- Don't need specific tracking IDs from Mercury
+- Finds systemic patterns across all stations
+- Identifies real bottlenecks in the data
+- Works with whatever dates have actual data
+
+## Command:
+```bash
+cd /Volumes/workplace/DecisionTreeTool/OpsBrain
+PGPASSWORD='2w|:k0]!bY9&r~#T(yhn5=;$6D%;j*9yEO[z2}U[kCve8~F}2NTQV.b$ViZs4X.`' \
+psql -h superlab-na.db.amazon.com -p 8199 -d superlab -U iyerdiv \
+  -f find_bottleneck_patterns_20250918.sql \
+  -o bottleneck_patterns_results.txt
+```
+
+This will find the ACTUAL bottlenecks in the system, regardless of specific tracking IDs!

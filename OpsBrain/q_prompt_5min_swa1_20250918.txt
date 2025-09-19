@@ -1,0 +1,80 @@
+Q, please run the SWA1 validation with 5-MINUTE intervals for accurate SSD analysis.
+
+## File to Run:
+/Users/iyerdiv/swa1_validation_corrected.sql
+
+## BUT FIRST - Update Part 3 for 5-minute intervals:
+
+Replace the Little's Law section (Part 3) with this 5-minute version:
+
+```sql
+-- Part 3: Little's Law 5-MINUTE analysis (replace the hourly version)
+WITH five_min_flow AS (
+  SELECT
+    DATE_TRUNC('hour', event_datetime_utc) +
+    INTERVAL '5 minutes' * FLOOR(EXTRACT(MINUTE FROM event_datetime_utc) / 5) as interval_time,
+    COUNT(CASE WHEN status_code = 'AT_STATION' THEN 1 END) as arrivals,
+    COUNT(DISTINCT tracking_id) as inventory,
+    COUNT(CASE WHEN status_code IN ('DELIVERED', 'READY_FOR_DEPARTURE') THEN 1 END) as exits
+  FROM heisenbergrefinedobjects.d_perfectmile_shipment_status_history
+  WHERE delivery_station_code = 'SWA1'
+    AND DATE(event_datetime_utc) = '2025-09-15'
+    AND ship_method LIKE '%RUSH%'
+  GROUP BY DATE_TRUNC('hour', event_datetime_utc) +
+           INTERVAL '5 minutes' * FLOOR(EXTRACT(MINUTE FROM event_datetime_utc) / 5)
+)
+SELECT
+  TO_CHAR(interval_time, 'HH24:MI') as time_5min,
+  arrivals,
+  inventory,
+  CASE
+    WHEN arrivals > 0 THEN ROUND(inventory::FLOAT / arrivals * 60, 0)
+    ELSE 0
+  END as wait_minutes,
+  CASE
+    WHEN arrivals > 0 AND exits > 0 THEN
+      CASE
+        WHEN arrivals::FLOAT / NULLIF(exits, 0) > 1.5 THEN 'BOTTLENECK'
+        WHEN arrivals::FLOAT / NULLIF(exits, 0) > 1.2 THEN 'CONGESTION'
+        ELSE 'NORMAL'
+      END
+    ELSE 'NORMAL'
+  END as flow_status
+FROM five_min_flow
+WHERE arrivals > 0
+  AND EXTRACT(HOUR FROM interval_time) BETWEEN 14 AND 18  -- Focus on peak hours 2-6pm
+ORDER BY interval_time
+LIMIT 50;
+```
+
+## What We're Validating:
+
+1. **Mercury Package Check** (Part 1):
+   - Should find packages with dwell: 2269, 267, 289, 2497, 266 minutes
+   - Verify they're at SWA1
+
+2. **High Dwell Summary** (Part 2):
+   - Count packages >200 min dwell
+   - Check how many in 267-307 range
+   - Identify Missing DEA percentage
+
+3. **5-Minute Bottleneck Detection** (Part 3):
+   - Shows bottlenecks at 5-min granularity
+   - Critical for SSD (30-min target)
+   - Should reveal 14:00-16:00 (2-4pm) congestion
+
+## Expected Results:
+- Part 1: Should match Mercury's dwell times within 10%
+- Part 2: Should find 100+ high-dwell packages
+- Part 3: Should show bottlenecks every 5 minutes during peak
+
+## Command to Run:
+```bash
+cd /Volumes/workplace/DecisionTreeTool/OpsBrain
+PGPASSWORD='2w|:k0]!bY9&r~#T(yhn5=;$6D%;j*9yEO[z2}U[kCve8~F}2NTQV.b$ViZs4X.`' \
+psql -h superlab-na.db.amazon.com -p 8199 -d superlab -U iyerdiv \
+  -f /Users/iyerdiv/swa1_validation_corrected.sql \
+  -o swa1_5min_results_20250918.txt
+```
+
+This 5-minute analysis will show exactly WHEN packages get stuck, not just that they do!

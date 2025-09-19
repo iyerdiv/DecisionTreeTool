@@ -1,0 +1,36 @@
+{
+  "analysis_metadata": {
+    "generated_at": "2025-09-18 16:19:34.531534",
+    "data_source": "SWA1 Station Flow Analysis",
+    "period": "2025-09-11 10:22:12 to 2025-09-16 12:57:12",
+    "total_days": 6,
+    "total_records": 1097,
+    "total_packages": 88557
+  },
+  "little_law_validation": {
+    "formula": "L = \u03bb \u00d7 W",
+    "description": "Queue Length = Arrival Rate \u00d7 Wait Time",
+    "validation_error": "< 1%",
+    "status": "VALIDATED"
+  },
+  "critical_findings": {
+    "peak_queue_length": 257.84283466666665,
+    "peak_time": "2025-09-12 11:37:12",
+    "critical_hours": [
+      20,
+      21
+    ],
+    "avg_queue_during_peak": 145.34497042207687,
+    "bottleneck_frequency": {
+      "Critical": 269,
+      "Severe": 338,
+      "Moderate": 146
+    }
+  },
+  "recommendations": [
+    "IMMEDIATE: Add capacity during 20:00-21:00 peak",
+    "STRATEGIC: Implement pre-emptive routing at 17:00",
+    "MONITORING: Alert threshold at L>100",
+    "OPERATIONAL: Stagger arrivals to smooth \u03bb"
+  ]
+}

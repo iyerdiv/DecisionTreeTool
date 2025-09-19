@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-09-19T07:30:16.682887",
+  "analysis_type": "flow_only",
+  "key_metrics": {
+    "total_inflow": 743421,
+    "total_outflow": 591106,
+    "net_accumulation": 152315,
+    "accumulation_rate": 1397.3853211009175,
+    "flow_ratio": 1.2576779799223827,
+    "capacity_utilization": 0.3232252569446467,
+    "inflow_cv": 0.9480747574296848,
+    "outflow_cv": 1.0400793492589335,
+    "dispersion_index": 6130.466083446959,
+    "avg_dwell_minutes": 384.0438335804551
+  },
+  "stability": "UNSTABLE",
+  "recommendation": "Increase outflow capacity or reduce inflow"
+}

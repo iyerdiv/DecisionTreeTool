@@ -1,0 +1,244 @@
+{
+  "system_name": "Little's Law Multi-Day Alert System",
+  "version": "1.0",
+  "created": "2025-09-18 16:22:47.823373",
+  "alert_thresholds": {
+    "0": {
+      "normal": 33.7,
+      "watch": 50.8,
+      "warning": 85.7,
+      "critical": 96.3,
+      "severe": 111.7
+    },
+    "1": {
+      "normal": 16.5,
+      "watch": 28.6,
+      "warning": 49.8,
+      "critical": 53.5,
+      "severe": 55.4
+    },
+    "2": {
+      "normal": 9.9,
+      "watch": 18.8,
+      "warning": 24.8,
+      "critical": 34.1,
+      "severe": 49.5
+    },
+    "3": {
+      "normal": 3.8,
+      "watch": 7.1,
+      "warning": 12.3,
+      "critical": 13.9,
+      "severe": 19.5
+    },
+    "4": {
+      "normal": 5.3,
+      "watch": 11.5,
+      "warning": 18.4,
+      "critical": 25.7,
+      "severe": 27.8
+    },
+    "5": {
+      "normal": 8.7,
+      "watch": 13.1,
+      "warning": 21.4,
+      "critical": 28.0,
+      "severe": 38.4
+    },
+    "6": {
+      "normal": 10.6,
+      "watch": 17.4,
+      "warning": 27.1,
+      "critical": 47.3,
+      "severe": 91.8
+    },
+    "7": {
+      "normal": 16.8,
+      "watch": 42.3,
+      "warning": 65.3,
+      "critical": 72.4,
+      "severe": 95.3
+    },
+    "8": {
+      "normal": 27.0,
+      "watch": 61.8,
+      "warning": 105.3,
+      "critical": 125.3,
+      "severe": 169.4
+    },
+    "9": {
+      "normal": 51.9,
+      "watch": 96.6,
+      "warning": 126.7,
+      "critical": 148.2,
+      "severe": 168.0
+    },
+    "10": {
+      "normal": 59.0,
+      "watch": 88.7,
+      "warning": 118.4,
+      "critical": 140.9,
+      "severe": 198.8
+    },
+    "11": {
+      "normal": 59.2,
+      "watch": 79.7,
+      "warning": 139.1,
+      "critical": 170.2,
+      "severe": 226.2
+    },
+    "12": {
+      "normal": 57.7,
+      "watch": 93.1,
+      "warning": 112.1,
+      "critical": 130.0,
+      "severe": 163.8
+    },
+    "13": {
+      "normal": 75.9,
+      "watch": 113.9,
+      "warning": 134.9,
+      "critical": 145.3,
+      "severe": 182.7
+    },
+    "14": {
+      "normal": 79.8,
+      "watch": 99.7,
+      "warning": 119.1,
+      "critical": 137.1,
+      "severe": 153.7
+    },
+    "15": {
+      "normal": 63.4,
+      "watch": 84.8,
+      "warning": 117.3,
+      "critical": 141.3,
+      "severe": 164.4
+    },
+    "16": {
+      "normal": 66.1,
+      "watch": 86.1,
+      "warning": 116.7,
+      "critical": 123.7,
+      "severe": 151.7
+    },
+    "17": {
+      "normal": 99.6,
+      "watch": 123.2,
+      "warning": 143.6,
+      "critical": 165.4,
+      "severe": 190.1
+    },
+    "18": {
+      "normal": 94.2,
+      "watch": 115.7,
+      "warning": 145.9,
+      "critical": 165.5,
+      "severe": 178.0
+    },
+    "19": {
+      "normal": 104.2,
+      "watch": 136.7,
+      "warning": 161.5,
+      "critical": 171.7,
+      "severe": 205.9
+    },
+    "20": {
+      "normal": 147.7,
+      "watch": 180.7,
+      "warning": 206.6,
+      "critical": 215.3,
+      "severe": 231.3
+    },
+    "21": {
+      "normal": 144.4,
+      "watch": 167.6,
+      "warning": 191.0,
+      "critical": 193.5,
+      "severe": 227.0
+    },
+    "22": {
+      "normal": 97.4,
+      "watch": 115.6,
+      "warning": 128.1,
+      "critical": 146.0,
+      "severe": 187.1
+    },
+    "23": {
+      "normal": 56.3,
+      "watch": 67.4,
+      "warning": 87.3,
+      "critical": 90.7,
+      "severe": 100.8
+    }
+  },
+  "day_specific_peaks": {
+    "Friday": [
+      17,
+      18,
+      19,
+      20
+    ],
+    "Saturday": [
+      13,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "Sunday": [
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "Monday": [
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "Tuesday": []
+  },
+  "alert_rules": [
+    {
+      "name": "Early Warning",
+      "condition": "L > P75 AND dL/dt > 0",
+      "lead_time": "2 hours",
+      "action": "Notify operations team"
+    },
+    {
+      "name": "Bottleneck Imminent",
+      "condition": "L > P90 OR (L > P75 AND \u03bb > 20)",
+      "lead_time": "30 minutes",
+      "action": "Activate contingency"
+    },
+    {
+      "name": "Critical Overload",
+      "condition": "L > P95",
+      "lead_time": "Immediate",
+      "action": "Emergency response"
+    }
+  ],
+  "notification_channels": [
+    "Dashboard",
+    "Email",
+    "SMS",
+    "Slack",
+    "PagerDuty"
+  ],
+  "ml_features": [
+    "current_L",
+    "current_lambda",
+    "current_W",
+    "L_velocity",
+    "L_acceleration",
+    "hour_of_day",
+    "day_of_week",
+    "L_lag_30min",
+    "historical_hour_avg"
+  ]
+}

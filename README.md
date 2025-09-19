@@ -24,20 +24,50 @@ Turn your "I have no idea what to do" moments into structured decision-making wi
 
 ---
 
-## 🚀 **NEW: Project-Agnostic Architecture**
+## 🚀 **NEW: Smart Project-Based Activation**
 
-**No more hardcoded paths!** The DecisionTreeTool now works seamlessly with any project:
+**Project detection from command names!** Each project gets its own trees, prompts, and insights:
 
 ```bash
-# Set up your project (one-time setup)
-python manage_decision_tree.py set-project myproject
-python manage_decision_tree.py set-path myproject "/path/to/your/project"
+# Activate any project - creates structure automatically
+./activate_OpsBrain      # Start/resume OpsBrain project
+./activate_MyProject     # Creates & activates new project
+./activate_DataAnalysis  # Each project is independent
 
-# Create and export - automatically goes to the right place
-python manage_decision_tree.py create --name "rca_analysis" --description "Root cause analysis workflow"
-python manage_decision_tree.py export --format markdown --project myproject
-# ✨ Magically appears in /path/to/your/project/decision_trees/rca_analysis.md
+# End session and prepare tomorrow
+./bye_OpsBrain          # Saves work, creates tomorrow's prompt
+./bye_MyProject         # Project-specific closure
+
+# View all projects
+./projects              # Shows all projects and their status
 ```
+
+### Quick Setup for New Projects
+```bash
+# Just create a symlink and go!
+ln -s activate activate_YourProject
+./activate_YourProject  # Auto-creates everything
+```
+
+## 📝 **Command Reference**
+
+### Primary Commands (in /Volumes/workplace/)
+| Command | Description | Example |
+|---------|-------------|---------|
+| `activate_<Project>` | Start/resume project session | `./activate_OpsBrain` |
+| `bye_<Project>` | End session, create tomorrow's prompt | `./bye_OpsBrain` |
+| `projects` | List all projects and status | `./projects` |
+
+### Master Control Script
+```bash
+/Volumes/workplace/DecisionTreeTool/claude.sh [command] [project]
+```
+- `start [project]` - Start a Claude session
+- `stop [project]` - End current session
+- `status` - Show session status
+- `list` - List projects and files
+- `archive` - Archive old files
+- `clean` - Clean temporary files
 
 ## 🧠 **Claude Workflow Integration**
 
@@ -105,6 +135,29 @@ brazil-build  # (Still works the same - some things never change)
 brazil-build test  # (Test early, test often, test with confidence)
 ```
 
+## 📁 Project Structure
+
+```
+/Volumes/workplace/
+├── activate_OpsBrain      # Project activation symlinks
+├── activate_MyProject     # (one per project)
+├── bye_OpsBrain          # Session ending symlinks
+├── bye_MyProject         # (one per project)
+├── projects              # List all projects
+└── DecisionTreeTool/
+    ├── scripts/          # Core scripts
+    │   ├── smart_activate.sh
+    │   ├── bye_claude_v2.sh
+    │   └── verify_setup.sh
+    ├── OpsBrain/         # Project directory
+    │   ├── trees/        # Daily decision trees
+    │   ├── prompts/      # Next session prompts
+    │   ├── insights/     # Key insights
+    │   └── .context      # Session context
+    ├── archive/          # Old trees (auto-archived)
+    └── claude.sh         # Master control script
+```
+
 ## Development Setup
 
 ```bash
@@ -120,15 +173,16 @@ pip install -e .[dev]
 ## Features
 
 ### 🎯 Core Capabilities
+- **Smart Project Detection**: Commands detect project from their invocation name
 - **Project-Agnostic Architecture**: Works with any project, no hardcoded paths
-- **Robust Decision Trees**: Navigate complex decision paths with fallback logic
-- ** Integration**: Generates systematic analysis documentation
-- **Claude Workflow Support**: Perfect for AI-assisted decision making
-- **Confidence Scoring**: Track decision quality through the entire path
-- **Context Validation**: Ensure required data exists before proceeding
-- **AI Assistant Integration**: Works with Claude (via MCP) and Amazon Q (via CLI)
+- **Single Daily Trees**: One decision tree per day per project (no more V101 madness!)
+- **Continuous Versioning**: Global version continues across all projects
+- **Tree Linking**: Each day automatically links to previous day's work
+- **Session Continuity**: Resume exactly where you left off
+- **Claude Integration**: Full session management with prompts and insights
+- **Legacy Support**: Maintains compatibility with OpsBrain structure
+- **Auto-archiving**: Old trees automatically archived after 7 days
 - **Multiple Export Formats**: JSON, YAML, Mermaid diagrams, Graphviz DOT, ASCII, **Markdown**
-- **YAML/JSON Support**: Define trees in human-readable formats
 
 ### 📊 Visual Output Examples
 

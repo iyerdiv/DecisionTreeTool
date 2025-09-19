@@ -1,0 +1,7 @@
+PROJECT=TestProject
+PROJECT_DESC=TestProject Project
+PROJECT_DIR=/Volumes/workplace/DecisionTreeTool/TestProject
+TODAY_TREE=/Volumes/workplace/DecisionTreeTool/TestProject/trees/decision_tree_20250917.md
+PROJECT_VERSION=2
+GLOBAL_VERSION=5
+ACTIVATED=2025-09-17 14:25:30

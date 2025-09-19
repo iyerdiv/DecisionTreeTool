@@ -1,0 +1,8 @@
+Model,Metric,Value,Status,Evidence,Logic_Check
+Conservation Law,R²,0.0647,FAILED,Based on 109 hourly windows,Mass balance should hold for any queue system
+Little's Law,Error,26502.5%,FAILED,Using actual measured dwell times from data,This is NOT circular - using independent measurements
+Flow Stability,Avg Utilization,0.323,STABLE,"Max capacity = 21101, Unstable 2/109 hours",ρ < 1 required for stability (queue theory)
+Poisson Process,Dispersion Index,6074.223,NOT POISSON,"Mean=6820.38, Var=41428487.54",Index ≈ 1 indicates Poisson distribution
+Queue Sensitivity,dQ/dλ,0.005,LOW,Based on 107 change measurements,Measures system responsiveness to arrival variations
+Chaos Analysis,Queue CV,0.686,EDGE OF CHAOS,"Autocorr(1)=0.917, Inflow CV=0.948",High CV and low autocorr indicate chaos
+M/M/1 Queue,R²,0.3423,POOR FIT,Based on 107 stable periods (ρ<0.95),Assumes exponential service and Poisson arrivals

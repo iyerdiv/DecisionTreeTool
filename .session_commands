@@ -1,0 +1,3 @@
+alias save="bash /Volumes/workplace/DecisionTreeTool/scripts/save_session.sh"
+alias bye="bash /Volumes/workplace/DecisionTreeTool/scripts/bye_claude_v3.sh"
+alias status="bash /Volumes/workplace/DecisionTreeTool/claude.sh status"

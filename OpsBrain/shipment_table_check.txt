@@ -1,0 +1,47 @@
+     check_type     |       table_schema       |              table_name               | table_type 
+--------------------+--------------------------+---------------------------------------+------------
+ TABLE_EXISTS_CHECK | heisenbergrefinedobjects | d_perfectmile_shipment_status_history | BASE TABLE
+(1 row)
+
+   check_type    |       table_schema       |                     table_name                      
+-----------------+--------------------------+-----------------------------------------------------
+ SHIPMENT_TABLES | heisenbergrefinedobjects | tra_shipments
+ SHIPMENT_TABLES | heisenbergrefinedobjects | fc_shipments_tbd
+ SHIPMENT_TABLES | heisenbergrefinedobjects | shipment_packages_tbd
+ SHIPMENT_TABLES | heisenbergrefinedobjects | shipment_snapshots_v2
+ SHIPMENT_TABLES | heisenbergrefinedobjects | shipments
+ SHIPMENT_TABLES | heisenbergrefinedobjects | transport_shipments
+ SHIPMENT_TABLES | heisenbergrefinedobjects | d_perfectmile_gdea_transhipment
+ SHIPMENT_TABLES | heisenbergrefinedobjects | d_perfectmile_gdea_runchk_transhipment
+ SHIPMENT_TABLES | heisenbergrefinedobjects | d_perfectmile_shipment_status_history_original_depr
+ SHIPMENT_TABLES | heisenbergrefinedobjects | comm_component_per_shipments
+ SHIPMENT_TABLES | heisenbergrefinedobjects | ats_shipments
+ SHIPMENT_TABLES | heisenbergrefinedobjects | shipment_attributes
+ SHIPMENT_TABLES | heisenbergrefinedobjects | d_perfectmile_shipment_snapshots
+ SHIPMENT_TABLES | heisenbergrefinedobjects | d_perfectmile_shipment_status_history
+(14 rows)
+
+     check_type     |               column_name               |          data_type          
+--------------------+-----------------------------------------+-----------------------------
+ GLOBAL_DEA_COLUMNS | region_id                               | numeric
+ GLOBAL_DEA_COLUMNS | legal_entity_id                         | numeric
+ GLOBAL_DEA_COLUMNS | marketplace_id                          | numeric
+ GLOBAL_DEA_COLUMNS | amazon_barcode                          | character varying
+ GLOBAL_DEA_COLUMNS | customer_shipment_item_id               | numeric
+ GLOBAL_DEA_COLUMNS | fulfillment_shipment_id                 | numeric
+ GLOBAL_DEA_COLUMNS | package_id                              | numeric
+ GLOBAL_DEA_COLUMNS | asin                                    | character varying
+ GLOBAL_DEA_COLUMNS | customer_order_item_id                  | numeric
+ GLOBAL_DEA_COLUMNS | ordering_order_id                       | character varying
+ GLOBAL_DEA_COLUMNS | quantity                                | numeric
+ GLOBAL_DEA_COLUMNS | external_promised_delivery_date_item    | timestamp without time zone
+ GLOBAL_DEA_COLUMNS | internal_promised_delivery_date_item    | timestamp without time zone
+ GLOBAL_DEA_COLUMNS | external_promised_delivery_date_package | timestamp without time zone
+ GLOBAL_DEA_COLUMNS | internal_promised_delivery_date_package | timestamp without time zone
+ GLOBAL_DEA_COLUMNS | external_estimated_arrival_date         | timestamp without time zone
+ GLOBAL_DEA_COLUMNS | internal_estimated_arrival_date         | timestamp without time zone
+ GLOBAL_DEA_COLUMNS | attempt_status                          | character varying
+ GLOBAL_DEA_COLUMNS | scac                                    | character varying
+ GLOBAL_DEA_COLUMNS | fulfillment_origin_node                 | character varying
+(20 rows)
+

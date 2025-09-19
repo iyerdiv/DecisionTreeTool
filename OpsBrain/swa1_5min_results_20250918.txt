@@ -1,0 +1,18 @@
+   analysis_type    |   tracking_id   | mercury_dwell_min | our_total_dwell_min | delta_minutes | validation_status | station_code | event_count 
+--------------------+-----------------+-------------------+---------------------+---------------+-------------------+--------------+-------------
+ MERCURY_VALIDATION | TBA324328209818 |              2497 |                   0 |          2497 | NOT_FOUND         |              |            
+ MERCURY_VALIDATION | TBA324382452417 |              2269 |                   0 |          2269 | NOT_FOUND         |              |            
+ MERCURY_VALIDATION | TBA324387931890 |               289 |                   0 |           289 | NOT_FOUND         |              |            
+ MERCURY_VALIDATION | TBA324407564226 |               267 |                   0 |           267 | NOT_FOUND         |              |            
+ MERCURY_VALIDATION | TBA324408440124 |               266 |                   0 |           266 | NOT_FOUND         |              |            
+(5 rows)
+
+  analysis_type  | total_high_dwell_packages | target_range_packages | avg_dwell_minutes | min_dwell | max_dwell 
+-----------------+---------------------------+-----------------------+-------------------+-----------+-----------
+ SWA1_HIGH_DWELL |                         0 |                     0 |                   |           |          
+(1 row)
+
+ analysis_type | time_5min | arrivals | inventory | wait_minutes | flow_status 
+---------------+-----------+----------+-----------+--------------+-------------
+(0 rows)
+

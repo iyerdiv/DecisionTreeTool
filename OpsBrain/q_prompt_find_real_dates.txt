@@ -1,0 +1,29 @@
+Q, the dates in the database look corrupted (2078, 2066, etc.). Let's find the REAL data.
+
+## File to Run:
+/Volumes/workplace/DecisionTreeTool/OpsBrain/find_real_dates.sql
+
+## What We're Looking For:
+
+1. **Reasonable Dates**: Between 2024-2025 only
+2. **Date Range**: What dates between 2020-2025 have data
+3. **September 2024**: Check if Sept 2024 has RUSH packages
+4. **Top Stations**: Which stations have the most data in 2024-2025
+5. **Mercury Packages**: Search without date restriction
+
+## This Will Help Us:
+- Identify if the data has wrong timestamps
+- Find what dates ACTUALLY have real data
+- Determine if we should look in 2024 instead of 2025
+- See if Mercury packages exist under different dates
+
+## Command:
+```bash
+cd /Volumes/workplace/DecisionTreeTool/OpsBrain
+PGPASSWORD='2w|:k0]!bY9&r~#T(yhn5=;$6D%;j*9yEO[z2}U[kCve8~F}2NTQV.b$ViZs4X.`' \
+psql -h superlab-na.db.amazon.com -p 8199 -d superlab -U iyerdiv \
+  -f find_real_dates.sql \
+  -o real_dates_results.txt
+```
+
+The corrupt dates (2078, etc.) suggest test data. We need to find the actual operational data!
