@@ -12,6 +12,7 @@ sys.path.insert(0, str(Path(__file__).parent / 'src'))
 from watcher import __version__
 from watcher.event import Event, EventStore
 from watcher.logger import TreeLogger
+from watcher.intelligent_logger import IntelligentLogger
 from watcher.watcher import FileSystemWatcher
 from watcher.daemon import Daemon
 
@@ -26,7 +27,8 @@ def cli():
 @click.option('--watch-path', '-w', required=True, help='Directory to watch')
 @click.option('--tree-path', '-t', required=True, help='Path to decision tree file')
 @click.option('--daemon', '-d', is_flag=True, help='Run as daemon')
-def start(watch_path: str, tree_path: str, daemon: bool):
+@click.option('--enable-ai', is_flag=True, help='Enable AI-powered categorization (requires ANTHROPIC_API_KEY)')
+def start(watch_path: str, tree_path: str, daemon: bool, enable_ai: bool):
     """Start the file system watcher"""
     watch_path = os.path.abspath(watch_path)
     tree_path = os.path.abspath(tree_path)
@@ -103,7 +105,8 @@ def start(watch_path: str, tree_path: str, daemon: bool):
                 os.remove(pidfile)
 
         def run_watcher():
-            watcher = FileSystemWatcher(watch_path=watch_path, tree_path=tree_path)
+            logger = IntelligentLogger(tree_path, enable_ai=enable_ai) if enable_ai else TreeLogger(tree_path)
+            watcher = FileSystemWatcher(watch_path=watch_path, tree_path=tree_path, logger=logger)
             watcher.start()
 
         daemon_mgr.start(run_watcher)
@@ -112,8 +115,11 @@ def start(watch_path: str, tree_path: str, daemon: bool):
         click.echo(f"Starting watcher...")
         click.echo(f"  Watch: {watch_path}")
         click.echo(f"  Tree:  {tree_path}")
+        if enable_ai:
+            click.echo(f"  AI:    Enabled (intelligent categorization)")
         click.echo(f"Press Ctrl+C to stop")
-        watcher = FileSystemWatcher(watch_path=watch_path, tree_path=tree_path)
+        logger = IntelligentLogger(tree_path, enable_ai=enable_ai) if enable_ai else TreeLogger(tree_path)
+        watcher = FileSystemWatcher(watch_path=watch_path, tree_path=tree_path, logger=logger)
         watcher.start()
 
 

@@ -131,11 +131,11 @@ class OpsBrainEventHandler(FileSystemEventHandler):
 class FileSystemWatcher:
     """Main file system watcher"""
 
-    def __init__(self, watch_path: str, tree_path: str):
+    def __init__(self, watch_path: str, tree_path: str, logger: Optional[TreeLogger] = None):
         self.watch_path = os.path.abspath(watch_path)
         self.tree_path = tree_path
         self.event_store = EventStore(storage_path=tree_path)
-        self.tree_logger = TreeLogger(tree_path=tree_path)
+        self.tree_logger = logger if logger else TreeLogger(tree_path=tree_path)
         self.observer: Optional[Observer] = None
 
     def start(self):

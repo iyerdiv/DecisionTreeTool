@@ -7,6 +7,8 @@ Automatic file system event tracking daemon for decision tree workflows.
 - **Real-time File Monitoring**: Tracks all file changes in your workspace
 - **Automatic Event Logging**: Appends events to decision tree markdown files
 - **Smart Categorization**: Auto-detects event types (code changes, prompts, documentation)
+- **AI-Powered WHY Extraction** ✨: Infers decision-making reasoning from file changes (requires API key)
+- **Automatic Section Placement**: Places events in appropriate decision tree categories
 - **Daemon Mode**: Runs as background process with PID management
 - **Unique Event IDs**: Collision-free IDs using timestamp + hash
 - **Atomic Writes**: Corruption-proof file updates
@@ -44,7 +46,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-### Foreground Mode
+### Basic Mode
 
 ```bash
 ./watcher.py start \
@@ -54,14 +56,47 @@ pip install -r requirements.txt
 
 Press `Ctrl+C` to stop.
 
-### Daemon Mode
+### AI-Powered Mode ✨ (Recommended)
+
+Enable intelligent WHY extraction with AI categorization:
 
 ```bash
-# Start
+# Set your API key
+export ANTHROPIC_API_KEY=sk-ant-...
+
+# Start with AI enabled
 ./watcher.py start \
   --watch-path /path/to/your/workspace \
   --tree-path /path/to/decision_tree.md \
-  --daemon
+  --enable-ai
+```
+
+**What AI Mode Does:**
+- Infers **WHY** decisions were made from file changes
+- Extracts **intent** and **reasoning** from context
+- Automatically categorizes events into decision tree sections
+- Captures **impact** and **implications**
+- Generates searchable keywords
+
+**Example AI Output:**
+```markdown
+🔹 **Decision: Switch to JWT-based authentication**
+   - **What**: Implemented JWT token generation in auth.py
+   - **Why**: Moving away from session-based auth to enable stateless API authentication for mobile clients
+   - **Impact**: Enables horizontal scaling and better mobile app support. Will require client changes.
+   - **Time**: 14:23:45
+   - **Keywords**: authentication, jwt, stateless, mobile, api
+```
+
+### Daemon Mode
+
+```bash
+# Start as background daemon
+./watcher.py start \
+  --watch-path /path/to/your/workspace \
+  --tree-path /path/to/decision_tree.md \
+  --daemon \
+  --enable-ai  # Optional: enable AI
 
 # Check status
 ./watcher.py status --watch-path /path/to/your/workspace
