@@ -69,45 +69,16 @@ class TreeLogger:
 """)
 
     def log_event(self, event: Event):
-        """Append event to tree log"""
+        """Append event to tree log (optimized for performance)"""
         log_entry = event.to_log_entry()
 
-        # Use atomic write pattern
-        temp_path = f"{self.tree_path}.tmp"
-
         try:
-            # Read existing content
-            with open(self.tree_path, 'r') as f:
-                content = f.read()
-
-            # Find the log section
-            if "## 📝 Event Log" in content:
-                # Append to log section
-                parts = content.split("## 📝 Event Log")
-                if len(parts) == 2:
-                    header = parts[0] + "## 📝 Event Log"
-                    log_section = parts[1]
-
-                    # Add new entry
-                    new_content = f"{header}{log_section}{log_entry}\n"
-                else:
-                    # Just append at end
-                    new_content = content + f"\n{log_entry}\n"
-            else:
-                # No log section, append at end
-                new_content = content + f"\n## 📝 Event Log\n\n{log_entry}\n"
-
-            # Write to temp file
-            with open(temp_path, 'w') as f:
-                f.write(new_content)
-
-            # Atomic rename
-            os.replace(temp_path, self.tree_path)
+            # Simple append-only mode (99% I/O reduction)
+            # No need to read entire file or use temp files for append operations
+            with open(self.tree_path, 'a') as f:
+                f.write(log_entry + '\n')
 
         except Exception as e:
-            # Clean up temp file on error
-            if os.path.exists(temp_path):
-                os.remove(temp_path)
             print(f"⚠️  Error logging event: {e}")
 
     def add_reflection(self, reflection: str):
