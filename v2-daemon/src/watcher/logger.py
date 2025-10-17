@@ -13,15 +13,16 @@ class TreeLogger:
 
     def __init__(self, tree_path: str):
         self.tree_path = tree_path
+        self._reflections_section_exists = False  # Track section existence
         self.ensure_tree_exists()
 
     def ensure_tree_exists(self):
-        """Create tree file if it doesn't exist"""
+        """Create minimal tree file if it doesn't exist (optimized)"""
         if not os.path.exists(self.tree_path):
             # Create parent directory
             Path(self.tree_path).parent.mkdir(parents=True, exist_ok=True)
 
-            # Create initial tree structure
+            # Create minimal tree structure (sections added on-demand)
             today = datetime.now().strftime("%Y-%m-%d")
             with open(self.tree_path, 'w') as f:
                 f.write(f"""# OpsBrain Decision Tree - {today}
@@ -30,43 +31,14 @@ class TreeLogger:
 
 ---
 
-## 📋 AI Extraction Categories
-
-### ✅ 1. Decisions Made
-*Placeholder for decisions*
-
-### 🔧 2. Actions Taken
-*Placeholder for actions*
-
-### 📄 3. Files Created/Modified
-*Placeholder for file changes*
-
-### ⚠️ 4. Issues Encountered
-*Placeholder for issues*
-
-### 💡 5. Insights & Learnings
-*Placeholder for insights*
-
-### 🔗 6. Dependencies & Requirements
-*Placeholder for dependencies*
-
-### 📋 7. TODO Items Generated
-*Placeholder for todos*
-
-### ❓ 8. Questions & Answers
-*Placeholder for Q&A*
-
-### 🧪 9. Testing & Validation
-*Placeholder for testing*
-
-### 🔍 10. Debugging Steps
-*Placeholder for debugging*
-
----
-
 ## 📝 Event Log
 
 """)
+        else:
+            # Check if reflections section already exists (one-time check)
+            with open(self.tree_path, 'r') as f:
+                content = f.read()
+                self._reflections_section_exists = "## 🔮 Auto-Reflections" in content
 
     def log_event(self, event: Event):
         """Append event to tree log (optimized for performance)"""
@@ -82,28 +54,20 @@ class TreeLogger:
             print(f"⚠️  Error logging event: {e}")
 
     def add_reflection(self, reflection: str):
-        """Add auto-reflection to tree"""
+        """Add auto-reflection to tree (optimized append-only)"""
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        reflection_entry = f"\n### Auto-Reflection [{timestamp}]\n{reflection}\n"
-
-        temp_path = f"{self.tree_path}.tmp"
+        reflection_entry = f"### Auto-Reflection [{timestamp}]\n{reflection}\n\n"
 
         try:
-            with open(self.tree_path, 'r') as f:
-                content = f.read()
+            # First reflection: Create section header (one-time cost)
+            if not self._reflections_section_exists:
+                with open(self.tree_path, 'a') as f:
+                    f.write("\n---\n\n## 🔮 Auto-Reflections\n\n")
+                self._reflections_section_exists = True
 
-            # Add reflection section if needed
-            if "## 🔮 Auto-Reflections" not in content:
-                content += "\n\n---\n\n## 🔮 Auto-Reflections\n"
-
-            content += reflection_entry
-
-            with open(temp_path, 'w') as f:
-                f.write(content)
-
-            os.replace(temp_path, self.tree_path)
+            # All subsequent reflections: Pure append (zero reads)
+            with open(self.tree_path, 'a') as f:
+                f.write(reflection_entry)
 
         except Exception as e:
-            if os.path.exists(temp_path):
-                os.remove(temp_path)
             print(f"⚠️  Error adding reflection: {e}")
