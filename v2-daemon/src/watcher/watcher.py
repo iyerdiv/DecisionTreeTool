@@ -10,6 +10,7 @@ from watchdog.events import FileSystemEventHandler, FileSystemEvent
 
 from .event import Event, EventStore
 from .logger import TreeLogger
+from .chat_extractor import ChatExtractor
 
 
 class OpsBrainEventHandler(FileSystemEventHandler):
@@ -20,6 +21,7 @@ class OpsBrainEventHandler(FileSystemEventHandler):
         self.event_store = event_store
         self.tree_logger = tree_logger
         self.watch_path = watch_path
+        self.chat_extractor = ChatExtractor()
         self.ignored_patterns: Set[str] = {
             '.git', '__pycache__', '.DS_Store',
             '.pyc', '.swp', '~', '.tmp'
@@ -99,10 +101,23 @@ class OpsBrainEventHandler(FileSystemEventHandler):
         # Store event
         self.event_store.add_event(obs_event)
 
-        # Log to tree
+        # Log to tree (basic event)
         self.tree_logger.log_event(obs_event)
 
-        print(f"✓ {obs_event.to_log_entry()}")
+        # If it's a prompt file, extract chat content
+        if event_type == "prompt_created":
+            extraction = self.chat_extractor.extract_from_file(event.src_path)
+            if extraction:
+                chat_summary = self.chat_extractor.format_for_tree(extraction)
+                # Log chat summary as additional line
+                with open(self.tree_logger.tree_path, 'a') as f:
+                    f.write(f"  └─ {chat_summary}\n")
+                print(f"✓ {obs_event.to_log_entry()}")
+                print(f"  └─ {chat_summary}")
+            else:
+                print(f"✓ {obs_event.to_log_entry()}")
+        else:
+            print(f"✓ {obs_event.to_log_entry()}")
 
     def on_created(self, event: FileSystemEvent):
         """Handle file creation events"""
@@ -125,17 +140,30 @@ class OpsBrainEventHandler(FileSystemEventHandler):
         self.event_store.add_event(obs_event)
         self.tree_logger.log_event(obs_event)
 
-        print(f"✓ {obs_event.to_log_entry()}")
+        # If it's a prompt file, extract chat content
+        if event_type == "prompt_created":
+            extraction = self.chat_extractor.extract_from_file(event.src_path)
+            if extraction:
+                chat_summary = self.chat_extractor.format_for_tree(extraction)
+                # Log chat summary as additional line
+                with open(self.tree_logger.tree_path, 'a') as f:
+                    f.write(f"  └─ {chat_summary}\n")
+                print(f"✓ {obs_event.to_log_entry()}")
+                print(f"  └─ {chat_summary}")
+            else:
+                print(f"✓ {obs_event.to_log_entry()}")
+        else:
+            print(f"✓ {obs_event.to_log_entry()}")
 
 
 class FileSystemWatcher:
     """Main file system watcher"""
 
-    def __init__(self, watch_path: str, tree_path: str, logger: Optional[TreeLogger] = None):
+    def __init__(self, watch_path: str, tree_path: str):
         self.watch_path = os.path.abspath(watch_path)
         self.tree_path = tree_path
         self.event_store = EventStore(storage_path=tree_path)
-        self.tree_logger = logger if logger else TreeLogger(tree_path=tree_path)
+        self.tree_logger = TreeLogger(tree_path=tree_path)
         self.observer: Optional[Observer] = None
 
     def start(self):
