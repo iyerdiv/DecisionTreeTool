@@ -1,7 +1,9 @@
 """File system watcher implementation"""
 
 import os
+import sys
 import time
+import subprocess
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Set
@@ -166,7 +168,7 @@ class FileSystemWatcher:
         self.tree_logger = TreeLogger(tree_path=tree_path)
         self.observer: Optional[Observer] = None
 
-    def start(self):
+    def start(self, auto_view: bool = True):
         """Start watching the file system"""
         print(f"🔍 Starting OpsBrain Watcher")
         print(f"   Watching: {self.watch_path}")
@@ -189,11 +191,54 @@ class FileSystemWatcher:
         print("  Press Ctrl+C to stop")
         print()
 
+        # Auto-launch terminal tree viewer in new window
+        if auto_view:
+            self._launch_tree_viewer()
+
         try:
             while True:
                 time.sleep(1)
         except KeyboardInterrupt:
             self.stop()
+
+    def _launch_tree_viewer(self):
+        """Launch terminal tree viewer in new terminal window"""
+        try:
+            viewer_script = Path(__file__).parent / "watch_tree_terminal.py"
+
+            if not viewer_script.exists():
+                print(f"⚠️  Tree viewer not found: {viewer_script}")
+                return
+
+            # macOS: Open new Terminal window
+            if sys.platform == "darwin":
+                cmd = [
+                    "osascript", "-e",
+                    f'tell application "Terminal" to do script "cd {Path.cwd()} && python3 {viewer_script} {self.tree_path}"'
+                ]
+                subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                print(f"🌳 Launched tree viewer in new terminal window")
+
+            # Linux: Try gnome-terminal, xterm, konsole
+            elif sys.platform == "linux":
+                for term in ["gnome-terminal", "xterm", "konsole"]:
+                    try:
+                        cmd = [term, "--", "python3", str(viewer_script), self.tree_path]
+                        subprocess.Popen(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                        print(f"🌳 Launched tree viewer in new {term} window")
+                        break
+                    except FileNotFoundError:
+                        continue
+
+            # Windows: Use start command
+            elif sys.platform == "win32":
+                cmd = f'start cmd /k python {viewer_script} {self.tree_path}'
+                subprocess.Popen(cmd, shell=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+                print(f"🌳 Launched tree viewer in new cmd window")
+
+        except Exception as e:
+            print(f"⚠️  Could not auto-launch tree viewer: {e}")
+            print(f"   Run manually: python3 {viewer_script} {self.tree_path}")
 
     def stop(self):
         """Stop watching"""
